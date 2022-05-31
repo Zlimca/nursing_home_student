@@ -1,4 +1,5 @@
 # NHPlus User Stories
+
 > ## Aufgabenstellung
 > Plane innerhalb deiner Gruppe die noch ausstehenden Module, indem du
 >
@@ -6,12 +7,15 @@
 >
 > b) über die Formulierung von Akzeptanzkriterien definierst, wann eine User-Story fertig implementiert ist
 >
-> c) aus der User-Story und ihren Akzeptanzkriterien Tasks ableitest. Die Tasks sollen genau festlegen, welche Klassen neu zu implementieren und welche Klassen an welcher Stelle um welches Element anzupassen sind.
+> c) aus der User-Story und ihren Akzeptanzkriterien Tasks ableitest. Die Tasks sollen genau festlegen, welche Klassen
+> neu zu implementieren und welche Klassen an welcher Stelle um welches Element anzupassen sind.
 >
 > d) abschließend aus den Akzeptanzkriterien für die Testphase Testfälle ableitest.
 
 ## Lösung
+
 ### Aufgabe 1
+
 <table>
 	<td>Die Navigationsleiste am linken Rand der Anwendung soll einen weiteren Button bekommen, über den zu einer Ansicht gewechselt wird, die alle Pfleger/Pflegerinnen mit ihrer ID, ihrem Nach- und Vornamen sowie ihrer Telefonnummer angezeigt werden. (Diese Ansicht wurde bereits im letzten Sprint in der Datei AllCaregiverView.fxml fertiggestellt und wurde vom Auftraggeber so abgenommen).</td>
 	<tr>
@@ -109,7 +113,7 @@
 						<li> In der Datenbank wird ein neuer Eintrag in der Pfleger/Pflegerin-Tabelle mit allen eingetragenen Daten erstellt. </li>
 					</ol>
 				</div>
-				
+
 				<p><b>TF_2: Es können bestehende Pfleger/Pflegerinnen bearbeitet werden</b></p>
 				<p><b>Vorbedingung: Der User hat im Hauptmenü Pfleger/Pflegerinnen ausgewählt.</b></p>
 				<div>
@@ -145,9 +149,11 @@
 				</div>
 			</td>
 	</tr>
+
 </table>
 
 ### Aufgabe 2
+
 <table>
 <td>Die Anzeige einer einzelnen Behandlung soll um die Daten des Pflegers/in (der Name im Format Nachname, Vorname sowie Telefon in einem eigenem Label) ergänzt werden, der/die die Behandlung durchgeführt hat.</td>
 	<tr>
@@ -208,8 +214,8 @@
 		</tr>
 </table>
 
-
 ### Aufgabe 3
+
 <table>
 <td>Beim Anlegen einer neuen Behandlung soll die entsprechende Pflegekraft mit Hilfe einer Combobox ausgewählt werden können.</td>
 	<tr>
@@ -250,7 +256,6 @@
 			<td>
 				<p><b>TF_1: Anzeigen der Patienten im Dropdown</b>
 				<p><b>Vorbedingung:</b> Der Nutzer ist auf der Patienten Liste.</p>
-				
 				<div>
 					<p><b>auszuführende Testschritte:</b></p>
 					<ol>
@@ -265,7 +270,6 @@
 						<li>Es werden alle aktiven Pflegekräfte im Dropdown angezeigt</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Verknüpfungstabelle wird gepflegt</b></p><p><b>Vorbedingung:</b> Der Nutzer ist auf der Seite auf der die Patienten gelistet sind.</p>
 				<div>
 					<p><b>auszuführende Testschritte:</b></p>
@@ -284,9 +288,11 @@
 				</div>
 			</td>
 	</tr>
+
 </table>
 
 ### Aufgabe 4
+
 <table>
 	<td>Beim Löschen einer Pflegekraft muss ebenfalls die 10 Jahresregelung berücksichtigt werden, d.h. nicht mehr aktive Pfleger werden auf Wunsch gesperrt, sofern sie noch Behandlungen durchgeführt haben, die jünger als 10 Jahre sind. Sind nur noch Behandlungen, die 10 Jahre zurückliegen, wird die Pflegekraft gelöscht. Die durchgeführten Behandlungen sollen weiter angezeigt werden.</td>
 	<tr>
@@ -331,7 +337,6 @@
 						<li>Ändern von Inaktiv in Aktiv</li>
 					</ol>
 				</div>
-				
 				<div>
 					<b>erwartetes Ergebnis:</b>
 					<ol>
@@ -378,7 +383,6 @@
 				<div>
 					<p><b>auszuführende Testschritte: </b>-</p>
 				</div>
-				
 				<div>
 					<b>erwartetes Ergebnis:</b>
 					<ol>
@@ -386,7 +390,6 @@
 						<li>Wenn Behandlungen gefunden werden, die in die Kriterien passen, werden diese gelöscht</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Manuelle Überprüfung</b></p>
 				<p><b>Vorbedingung:</b> Der Nutzer ist auf der Seite wo die Behandlungen gelistet sind.</p>
 				<div>
@@ -484,7 +487,6 @@
 						<li>Log-Filter auf der Übersicht der Behandlungen überprüfen.</li>
 					</ol>
 				</div>
-				
 				<div>
 					<b>erwartetes Ergebnis:</b>
 					<ol>
@@ -493,7 +495,6 @@
 						<li>Beim Abbrechen passiert nichts.</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Ändern einer Behandlung und Pfleger</b></p>
 				<p><b>Vorbedingung:</b> Der Nutzer muss in der Übersicht für Behandlungen oder Pflegekräften sein.</p>
 				<div>
@@ -502,7 +503,6 @@
 						<li>Ändern aller Werte eines Datensatzes</li>
 					</ol>
 				</div>
-				
 				<div>
 					<b>erwartetes Ergebnis:</b>
 					<ol>
@@ -512,9 +512,11 @@
 			</td>
 		</tr>
 	<tr>
+
 </table>
 
 ### Vermögensstand entfernen
+
 <table>
 	<td>Der Vermögensstand ist für die Behandlung eines Patienten nicht von Relevanz. Deshalb soll er aus der Applikation vollständig entfernt werden.</td>
 	<tr>
@@ -570,6 +572,7 @@
 </table>
 
 ### Login
+
 <table>
 	<td>Damit nicht alle Personen auf NHPlus zugreifen können und es Berechtigungsstufen geben kann brauchen wir ein Login System.</td>
 	<tr>
@@ -629,7 +632,6 @@
 						<li>Das Hauptmenü-Fenster öffnet sich</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Nicht erfolgreich einloggen</b></p>
 				<p><b>Vorbedingung: </b>-</p>
 				<div>
@@ -646,7 +648,6 @@
 						<li>Es erscheint eine Fehlermeldung</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_3: Anlage eines neuen Pflegers</b></p>
 				<p><b>Vorbedingung: </b>Der User hat im Hauptmenü Pfleger/Pflegerinnen ausgewählt.</p>
 				<div>
@@ -666,7 +667,6 @@
 				</div>
 			</td>
 	</tr>
-	
 	<tr>
 		<th>User Story 2</th>
 	</tr>
@@ -729,7 +729,6 @@
 						<li>Der Eintrag wird in der Datenbank gespeichert und in der obigen Tabelle angezeigt.</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Berechtigungsstufe löschen</b></p>
 				<p><b>Vorbedingung: </b>Der User muss mit Admin-Rechten eingeloggt sein</p>
 				<div>
@@ -745,7 +744,6 @@
 						<li>Der Eintrag wird aus Datenbank gelöscht und in der obigen Tabelle nicht mehr angezeigt.</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_3: Berechtigungsstufe bearbeiten</b></p>
 				<p><b>Vorbedingung: </b>Der User muss mit Admin-Rechten eingeloggt sein</p>
 				<div>
@@ -763,7 +761,6 @@
 						<li>Der Eintrag wird aus Datenbank geändert und in der obigen Tabelle aktualisiert.</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_4: Ändern einer Berechtigungsstufe eines Pflegers</b></p>
 				<p><b>Vorbedingung: </b>Der User muss mit Admin-Rechten eingeloggt sein</p>
 				<div>
@@ -833,7 +830,6 @@
 						<li>Der User gelangt ins Hauptmenü</li>
 					</ol>
 				</div>
-				
 				<p><b>TF_2: Ein neuer User meldet sich zum ersten Mal an mit ungültigen Passwort</b></p>
 				<p><b>Vorbedingung: </b>Der User loggt sich mit vorgegebenen Benutzername und Passwort ein und das neue Fenster erscheint</p>
 				<div>
@@ -853,4 +849,5 @@
 				</div>
 			</td>
 	</tr>
+
 </table>
