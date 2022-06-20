@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import model.Credentials;
 import model.Patient;
 
+import java.awt.*;
 import java.io.IOException;
+import java.sql.PseudoColumnUsage;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,23 +23,41 @@ public class LoginWindowController {
     @FXML
     private BorderPane LoginBorderPane;
     @FXML
-    private Label lblUsername;
+    javafx.scene.control.TextField username;
     @FXML
-    private Label lblPassword;
+    javafx.scene.control.TextField password;
+
+    private String usname;
+    private String psword;
     private CredentialsDAO dao;
 
-    public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
-        checkCaregiverData();
+    public void initialize(javafx.scene.control.TextField username, javafx.scene.control.TextField password) {
+        usname = this.username.getText();
+        psword = this.password.getText();
+
+        System.out.println(this.username.getText() + " " + this.password.getText());
     }
 
     @FXML
     private void handleLogin(ActionEvent e) {
+        initialize(username, password);
+        if(usname == "Kunibert" && psword == "1234"){
+            System.out.println("aaa");
+            showMainWindow();
+        }else{
+            System.out.println("Meh");
+        }
+
+    }
+
+    private void showMainWindow(){
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/MainWindowView.fxml"));
         try {
             LoginBorderPane.setCenter(loader.load());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        Main controller = loader.getController();
     }
 
     private void checkCaregiverData(){
