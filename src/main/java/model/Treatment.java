@@ -7,6 +7,7 @@ import java.time.LocalTime;
 public class Treatment {
     private long tid;
     private long pid;
+    private long cid;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -16,6 +17,8 @@ public class Treatment {
     public Treatment(long pid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.pid = pid;
+        //TODO: Add CID to Treatment attribute when Caregiver Class is created
+        //this.cid = cid;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -23,10 +26,11 @@ public class Treatment {
         this.remarks = remarks;
     }
 
-    public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
+    public Treatment(long tid, long pid, long cid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.tid = tid;
         this.pid = pid;
+        this.cid = cid;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -42,31 +46,32 @@ public class Treatment {
         return this.pid;
     }
 
-    public String getDate() {
-        return date.toString();
+    public long getCid() {
+        return this.cid;
     }
 
-    public String getBegin() {
-        return begin.toString();
+    public LocalDate getDate() {
+        return date;
     }
 
-    public String getEnd() {
-        return end.toString();
+    public LocalTime getBegin() {
+        return begin;
+    }
+
+    public LocalTime getEnd() {
+        return end;
     }
 
     public void setDate(String s_date) {
-        LocalDate date = DateConverter.convertStringToLocalDate(s_date);
-        this.date = date;
+        this.date = DateConverter.convertStringToLocalDate(s_date);
     }
 
     public void setBegin(String begin) {
-        LocalTime time = DateConverter.convertStringToLocalTime(begin);
-        this.begin = time;
+        this.begin = DateConverter.convertStringToLocalTime(begin);
     }
 
     public void setEnd(String end) {
-        LocalTime time = DateConverter.convertStringToLocalTime(end);
-        this.end = time;
+        this.end = DateConverter.convertStringToLocalTime(end);
     }
 
     public String getDescription() {

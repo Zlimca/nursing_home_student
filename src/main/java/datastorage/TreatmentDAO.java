@@ -11,6 +11,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+//language=SQL
+
 public class TreatmentDAO extends DAOimp<Treatment> {
 
     public TreatmentDAO(Connection conn) {
@@ -19,10 +21,9 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getDate(),
-                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
-                treatment.getRemarks());
+        return String.format("INSERT INTO treatment (pid, cid, treatment_date, begin, end, description, remarks) VALUES " +
+                "(%d, %d, '%s', '%s', '%s', '%s', '%s')", treatment.getPid(), treatment.getCid(), treatment.getDate(),
+                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks());
     }
 
     @Override
@@ -32,12 +33,11 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected Treatment getInstanceFromResultSet(ResultSet result) throws SQLException {
-        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-        LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-        LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-        Treatment m = new Treatment(result.getLong(1), result.getLong(2),
-                date, begin, end, result.getString(6), result.getString(7));
-        return m;
+        Treatment t = new Treatment(result.getLong(1), result.getLong(2),
+                result.getLong(3), result.getDate(4).toLocalDate(),
+                result.getTime(5).toLocalTime(), result.getTime(6).toLocalTime(),
+                result.getString(7), result.getString(8));
+        return t;
     }
 
     @Override
@@ -47,14 +47,13 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected ArrayList<Treatment> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment t = null;
+        ArrayList<Treatment> list = new ArrayList<>();
+        Treatment t;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
-            LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
-            LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
             t = new Treatment(result.getLong(1), result.getLong(2),
-                    date, begin, end, result.getString(6), result.getString(7));
+                    result.getLong(3), result.getDate(4).toLocalDate(),
+                    result.getTime(5).toLocalTime(), result.getTime(6).toLocalTime(),
+                    result.getString(7), result.getString(8));
             list.add(t);
         }
         return list;
@@ -74,16 +73,15 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     }
 
     public List<Treatment> readTreatmentsByPid(long pid) throws SQLException {
-        ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment object = null;
+        ArrayList<Treatment> list;
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByPid(pid));
         list = getListFromResultSet(result);
         return list;
     }
 
-    private String getReadAllTreatmentsOfOnePatientByPid(long pid){
-        return String.format("SELECT * FROM treatment WHERE pid = %d", pid);
+    private String getReadAllTreatmentsOfOnePatientByPid(long key){
+        return String.format("SELECT * FROM treatment WHERE pid = %d", key);
     }
 
     public void deleteByPid(long key) throws SQLException {
