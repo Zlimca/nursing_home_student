@@ -1,7 +1,5 @@
 package datastorage;
 
-import model.Credentials;
-
 public class DAOFactory {
 
     private static DAOFactory instance;
@@ -25,7 +23,7 @@ public class DAOFactory {
         return new PatientDAO(ConnectionBuilder.getConnection());
     }
 
-    public CredentialsDAO createCredentialsDAO() {
-        return new CredentialsDAO(ConnectionBuilder.getConnection());
+    public DAOCredentials createDAOCredentials() {
+        return new DAOCredentials(ConnectionBuilder.getConnection());
     }
 }
