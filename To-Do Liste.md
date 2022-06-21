@@ -1,0 +1,2 @@
+- [ ] Behandlungen um Patientennamen erweitern 
+- [ ] Zeitspanne wann die Behandlung + Pflegekraft gelöscht werden darf wird über einen Datensatz in einer extra Tabelle geregelt, dann kann ein berechtigter User das anpassen

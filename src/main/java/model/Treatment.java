@@ -42,31 +42,28 @@ public class Treatment {
         return this.pid;
     }
 
-    public String getDate() {
-        return date.toString();
+    public LocalDate getDate() {
+        return date;
     }
 
-    public String getBegin() {
-        return begin.toString();
+    public LocalTime getBegin() {
+        return begin;
     }
 
-    public String getEnd() {
-        return end.toString();
+    public LocalTime getEnd() {
+        return end;
     }
 
     public void setDate(String s_date) {
-        LocalDate date = DateConverter.convertStringToLocalDate(s_date);
-        this.date = date;
+        this.date = DateConverter.convertStringToLocalDate(s_date);
     }
 
     public void setBegin(String begin) {
-        LocalTime time = DateConverter.convertStringToLocalTime(begin);
-        this.begin = time;
+        this.begin = DateConverter.convertStringToLocalTime(begin);
     }
 
     public void setEnd(String end) {
-        LocalTime time = DateConverter.convertStringToLocalTime(end);
-        this.end = time;
+        this.end = DateConverter.convertStringToLocalTime(end);
     }
 
     public String getDescription() {
