@@ -1,5 +1,7 @@
 package controller;
 
+import datastorage.DAOCaregiver;
+import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
@@ -11,9 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Caregiver;
 import model.Patient;
 import model.Treatment;
-import datastorage.DAOFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -94,7 +96,7 @@ public class AllTreatmentController {
     }
 
     private void createCaregiverComboBoxData() {
-        CaregiverDAO dao = DAOFactory.getDAOFactory().createCaregiverDAO();
+        DAOCaregiver dao = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
             caregiverList = (ArrayList<Caregiver>) dao.readAll();
             this.caregiverComboBoxData.add("alle");
@@ -120,7 +122,7 @@ public class AllTreatmentController {
                 e.printStackTrace();
             }
         }
-        Patient patient = searchInList(selectedItem);
+        Patient patient = searchPatientInList(selectedItem);
         if (patient != null) {
             try {
                 allTreatments = dao.readTreatmentsByPid(patient.getPid());
@@ -145,7 +147,7 @@ public class AllTreatmentController {
                 e.printStackTrace();
             }
         }
-        Caregiver caregiver = searchInList(selectedItem);
+        Caregiver caregiver = searchCaregiverInList(selectedItem);
         if (caregiver != null) {
             try {
                 allTreatments = dao.readTreatmentsByPid(caregiver.getCid());
@@ -156,10 +158,19 @@ public class AllTreatmentController {
         }
     }
 
-    private Patient searchInList(String surname) {
+    private Patient searchPatientInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
                 return patient;
+            }
+        }
+        return null;
+    }
+
+    private Caregiver searchCaregiverInList(String surname) {
+        for (Caregiver caregiver : this.caregiverList) {
+            if (caregiver.getSurname().equals(surname)) {
+                return caregiver;
             }
         }
         return null;
@@ -181,7 +192,7 @@ public class AllTreatmentController {
     public void handleNewTreatment() {
         try {
             String p = this.patientComboBox.getSelectionModel().getSelectedItem();
-            Patient patient = searchInList(p);
+            Patient patient = searchPatientInList(p);
             newTreatmentWindow(patient);
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
