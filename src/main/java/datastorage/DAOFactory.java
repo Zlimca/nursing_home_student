@@ -23,7 +23,6 @@ public class DAOFactory {
         return new PatientDAO(ConnectionBuilder.getConnection());
     }
 
-    public DAOCredentials createDAOCredentials() {
-        return new DAOCredentials(ConnectionBuilder.getConnection());
-    }
+    public DAOCredentials createDAOCredentials() { return new DAOCredentials(ConnectionBuilder.getConnection());}
+
 }

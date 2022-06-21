@@ -16,13 +16,13 @@ public class DAOCredentials extends DAOimp<Credentials> {
 
     @Override
     protected String getCreateStatementString(Credentials credentials) {
-        return String.format("INSERT INTO credentials (prid, username, password) VALUES ('%s', '%s', '%s')",
-                credentials.getPrid(), credentials.getUsername(), credentials.getPassword());
+        return String.format("INSERT INTO credentials (prid, user_name, password, salt, first_login) VALUES ('%s', '%s', '%s','%s', '%s','%s')",
+                credentials.getPrid(), credentials.getUser_name(), credentials.getPassword(), credentials.getSalt(), credentials.isFirst_login());
     }
 
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT * FROM credentials WHERE cid = %d", key);
+        return String.format("SELECT * FROM credentials WHERE credentials_id = %d", key);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DAOCredentials extends DAOimp<Credentials> {
     @Override
     protected String getUpdateStatementString(Credentials credentials) {
 
-        return String.format("UPDATE credentials SET username = '%s', password = '%s' WHERE cid = %d", credentials.getUsername(), credentials.getPassword(), credentials.getcid());
+        return String.format("UPDATE credentials SET username = '%s', password = '%s' WHERE cid = %d", credentials.getUser_name(), credentials.getPassword(), credentials.getCredentials_id());
     }
 
     @Override

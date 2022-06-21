@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import model.Credentials;
+import model.Patient;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,11 +36,18 @@ public class LoginWindowController {
     @FXML
     private void handleLogin(ActionEvent e) {
         initialize(username, password);
-        if(usname.equals("Kunibert") && psword.equals("1234")){
-            System.out.println("aaa");
-            showMainWindow();
-        }else{
-            System.out.println("Meh");
+        this.dao = DAOFactory.getDAOFactory().createDAOCredentials();
+
+        List<Credentials> allCredentials;
+        try {
+            allCredentials = dao.readAll();
+            for (Credentials c : allCredentials) {
+                if(usname.equals(c.getUser_name()) && psword.equals(c.getPassword())){
+                    showMainWindow();
+                }
+            }
+        } catch (SQLException d) {
+            d.printStackTrace();
         }
 
     }
@@ -54,19 +62,6 @@ public class LoginWindowController {
         Main controller = loader.getController();
     }
 
-    private void checkCaregiverData(){
 
-        this.dao = DAOFactory.getDAOFactory().createDAOCredentials();
-        List<Credentials> allCredentials;
-        try {
-            allCredentials = dao.readAll();
-            for (Credentials c : allCredentials) {
-                //lese Daten aus Login-Tabelle + checke auf Übereinstimmung
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
 
