@@ -1,25 +1,22 @@
 package datastorage;
 
 import model.Caregiver;
-import model.Patient;
-import utils.DateConverter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
  * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
  */
-public class CaregiverDAO extends DAOimp<Patient> {
+public class DAOCaregiver extends DAOimp<Caregiver> {
 
     /**
      * constructs Onbject. Calls the Constructor from <code>DAOImp</code> to store the connection.
      * @param conn
      */
-    public CaregiverDAO(Connection conn) {
+    public DAOCaregiver(Connection conn) {
         super(conn);
     }
 
@@ -31,7 +28,7 @@ public class CaregiverDAO extends DAOimp<Patient> {
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
         return String.format("INSERT INTO caregiver (firstname, surname, telephone) VALUES ('%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.telephone());
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getTelephone());
     }
 
     /**
@@ -44,19 +41,17 @@ public class CaregiverDAO extends DAOimp<Patient> {
         return String.format("SELECT * FROM caregiver WHERE cid = %d", key);
     }
 
+    @Override
+    protected Caregiver getInstanceFromResultSet(ResultSet set) throws SQLException {
+        return null;
+    }
+
     /**
      * maps a <code>ResultSet</code> to a <code>Patient</code>
      * @param result ResultSet with a single row. Columns will be mapped to a patient-object.
      * @return patient with the data from the resultSet.
      */
-    @Override
-    protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
-        Caregiver c = null;
-        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
-        c = new Caregiver(result.getInt(1), result.getString(2),
-                result.getString(3);
-        return c;
-    }
+
 
     /**
      * generates a <code>SELECT</code>-Statement for all patients.
@@ -69,22 +64,20 @@ public class CaregiverDAO extends DAOimp<Patient> {
 
     /**
      * maps a <code>ResultSet</code> to a <code>Caregiver-List</code>
-     * @param result ResultSet with a multiple rows. Data will be mapped to patient-object.
-     * @return ArrayList with patients from the resultSet.
+     * @param result ResultSet with a multiple rows. Data will be mapped to caregiver-object.
+     * @return ArrayList with caregivers from the resultSet.
      */
     @Override
-    protected ArrayList<Patient> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Patient> list = new ArrayList<Patient>();
-        Patient p = null;
+    protected ArrayList<Caregiver> getListFromResultSet(ResultSet result) throws SQLException {
+        ArrayList<Caregiver> list = new ArrayList<Caregiver>();
+        Caregiver c = null;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
-            p = new Patient(result.getInt(1), result.getString(2),
-                    result.getString(3), date,
-                    result.getString(5), result.getString(6), result.getString(7));
-            list.add(p);
+            c = new Caregiver( result.getString(1), result.getString(2), result.getInt(3));
+            list.add(c);
         }
         return list;
     }
+
 
     /**
      * generates a <code>UPDATE</code>-Statement for a given patient
