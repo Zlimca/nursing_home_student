@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class PatientDAO extends DAOimp<Patient> {
 
     /**
-     * constructs Onbject. Calls the Constructor from <code>DAOImp</code> to store the connection.
-     * @param conn
+     * constructs Object. Calls the Constructor from <code>DAOImp</code> to store the connection.
+     * @param conn Connection
      */
     public PatientDAO(Connection conn) {
         super(conn);
@@ -30,15 +30,16 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getCreateStatementString(Patient patient) {
-        String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')");
-        String query2 = String.format("INSERT INTO patient (prid, carelevel, roomnumber) VALUES (IDENTITY(), '%s', '%s', '%s')",
-                patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth(), patient.getCareLevel(), patient.getRoomNumber());
+        String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
+                patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth());
+        String query2 = String.format("INSERT INTO patient (prid, carelevel, roomnumber) VALUES (IDENTITY(), '%s', '%s')",
+                patient.getCareLevel(), patient.getRoomNumber());
         return query1 + '\n' + query2;
     }
 
     /**
      * generates a <code>select</code>-Statement for a given key
-     * @param key for which a specific SELECTis to be created
+     * @param key for which a specific SELECT is to be created
      * @return <code>String</code> with the generated SQL.
      */
     @Override
@@ -77,7 +78,7 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected ArrayList<Patient> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Patient> list = new ArrayList<Patient>();
+        ArrayList<Patient> list = new ArrayList<>();
         Patient p;
         while (result.next()) {
             LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
@@ -100,7 +101,7 @@ public class PatientDAO extends DAOimp<Patient> {
                         "PRID = (SELECT pid FROM patient WHERE pid = %s)",
                 patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth().toString(), patient.getPid());
         String query2 = String.format("UPDATE patient SET carelevel = '%s', roomnumber = '%s' WHERE pid = %d",
-                patient.getCareLevel(), patient.getRoomNumber(), patient.getPid());;
+                patient.getCareLevel(), patient.getRoomNumber(), patient.getPid());
         return query1 + '\n' + query2;
     }
 
