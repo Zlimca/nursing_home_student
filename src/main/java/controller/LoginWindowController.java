@@ -1,20 +1,14 @@
 package controller;
 
-import datastorage.CredentialsDAO;
+import datastorage.DAOCredentials;
 import datastorage.DAOFactory;
-import datastorage.PatientDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import model.Credentials;
-import model.Patient;
 
-import java.awt.*;
 import java.io.IOException;
-import java.sql.PseudoColumnUsage;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,7 +23,7 @@ public class LoginWindowController {
 
     private String usname;
     private String psword;
-    private CredentialsDAO dao;
+    private DAOCredentials dao;
 
     public void initialize(javafx.scene.control.TextField username, javafx.scene.control.TextField password) {
         usname = this.username.getText();
@@ -41,7 +35,7 @@ public class LoginWindowController {
     @FXML
     private void handleLogin(ActionEvent e) {
         initialize(username, password);
-        if(usname == "Kunibert" && psword == "1234"){
+        if(usname.equals("Kunibert") && psword.equals("1234")){
             System.out.println("aaa");
             showMainWindow();
         }else{
@@ -62,7 +56,7 @@ public class LoginWindowController {
 
     private void checkCaregiverData(){
 
-        this.dao = DAOFactory.getDAOFactory().createCredentialsDAO();
+        this.dao = DAOFactory.getDAOFactory().createDAOCredentials();
         List<Credentials> allCredentials;
         try {
             allCredentials = dao.readAll();

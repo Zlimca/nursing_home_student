@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 //Login
-public class CredentialsDAO extends DAOimp<Credentials> {
+public class DAOCredentials extends DAOimp<Credentials> {
 
-    public CredentialsDAO(Connection conn) {
+    public DAOCredentials(Connection conn) {
         super(conn);
     }
 
