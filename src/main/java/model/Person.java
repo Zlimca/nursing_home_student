@@ -1,14 +1,24 @@
 package model;
 
+import java.time.LocalDate;
+
 public abstract class Person {
-    //private final long prId;
+    private long prId;
     private String firstName;
     private String surname;
+    private LocalDate dateOfBirth;
 
-    public Person(String firstName, String surname) {
-        //this.prId = prId;
+    public Person(String firstName, String surname, LocalDate dateOfBirth) {
         this.firstName = firstName;
         this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Person(long prId, String firstName, String surname, LocalDate dateOfBirth) {
+        this.prId = prId;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getFirstName() {
@@ -27,7 +37,10 @@ public abstract class Person {
         this.surname = surname;
     }
 
-    /*public long getPrId() {
+    public LocalDate getDateOfBirth(){ return dateOfBirth;}
+    public void setDateOfBirth(LocalDate dateOfBirth){ this.dateOfBirth = dateOfBirth;}
+
+    public long getPrId() {
         return prId;
-    }*/
+    }
 }

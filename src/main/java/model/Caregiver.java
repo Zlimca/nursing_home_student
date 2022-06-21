@@ -9,6 +9,10 @@ import java.util.List;
 public class Caregiver extends Person{
 
         private long cid;
+        private long prId;
+        private LocalDate dateOfBirth;
+        private long permission_id;
+
         private int telephone;
 
         private List<Caregiver> allCaregivers = new ArrayList<Caregiver>();
@@ -17,24 +21,48 @@ public class Caregiver extends Person{
          * constructs a patient from the given params.
          * @param firstName
          * @param surname
+         * @param dateOfBirth
+         * @param permission_id
+         * @param telephone
          */
-        public Caregiver(String firstName, String surname, int telephone) {
-            super(firstName, surname);
+        public Caregiver(String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone) {
+            super(firstName, surname, dateOfBirth);
+            this.permission_id = permission_id;
             this.telephone = telephone;
         }
-        public Caregiver(long cid, String firstName, String surname, int telephone) {
-            super(firstName, surname);
+
+       /**
+        * constructs a patient from the given params.
+        * @param cid
+        * @param prId
+        * @param firstName
+        * @param surname
+        * @param dateOfBirth
+        * @param permission_id
+        * @param telephone
+        */
+        public Caregiver(long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone) {
+            super(prId,firstName, surname, dateOfBirth);
             this.cid = cid;
+            this.permission_id = permission_id;
             this.telephone = telephone;
         }
 
         /**
          *
-         * @return patient id
+         * @return caregiver id
          */
         public long getCid() {
             return cid;
         }
+
+        /**
+        *
+        * @return person id
+        */
+        public long getPrId() {
+        return prId;
+    }
 
         /**
          *
@@ -45,9 +73,15 @@ public class Caregiver extends Person{
         }
 
         /**
-         * adds a treatment to the treatment-list, if it does not already contain it.
+        *
+        * @return permission_id as string
+        */
+        public long getPermission_id(){ return permission_id;}
+
+        /**
+         * adds a caregiver to the treatment-list, if it does not already contain it.
          * @param caregiver Caregiver
-         * @return true if the treatment was not already part of the list. otherwise false
+         * @return true if the caregiver was not already part of the list. otherwise false
          */
         public boolean add(Caregiver caregiver) {
             if (!this.allCaregivers.contains(caregiver)) {
@@ -59,13 +93,15 @@ public class Caregiver extends Person{
 
         /**
          *
-         * @return string-representation of the patient
+         * @return string-representation of the caregiver
          */
         public String toString() {
-            return "Patient" + "\nMNID: " + this.cid +
+            return "Caregiver" + "\nID: " + this.cid +
                     "\nFirstname: " + this.getFirstName() +
                     "\nSurname: " + this.getSurname() +
-                    "\nBirthday: " + this.telephone +
+                    "\nBirthday: " + this.getDateOfBirth() +
+                    "\nPermission_id: " + this.permission_id +
+                    "\nPhoneNumber: " + this.telephone +
                     "\n";
         }
     }

@@ -14,8 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Caregiver;
+import utils.DateConverter;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -32,6 +34,10 @@ public class AllCaregiverController {
     @FXML
     private TableColumn<Caregiver, String> colSurname;
     @FXML
+    private TableColumn<Caregiver, String> colDateOfBirth;
+    @FXML
+    private TableColumn<Caregiver, String> colPermission_id;
+    @FXML
     private TableColumn<Caregiver, String> colTelephone;
 
     @FXML
@@ -43,9 +49,11 @@ public class AllCaregiverController {
     @FXML
     TextField txtFirstname;
     @FXML
+    TextField txtDateOfBirth;
+    @FXML
+    TextField txtPermission_id;
+    @FXML
     TextField txtTelephone;
-
-
 
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
     private DAOCaregiver dao;
@@ -66,10 +74,14 @@ public class AllCaregiverController {
         this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("dateOfBirth"));
+        this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("permission_id"));
+        this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+
         this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("telephone"));
         this.colTelephone.setCellFactory(TextFieldTableCell.forTableColumn());
-
-
 
         //Anzeigen der Daten
         this.tableView.setItems(this.tableviewContent);
@@ -96,8 +108,8 @@ public class AllCaregiverController {
     }
 
     /**
-     * updates a patient by calling the update-Method in the {@link PatientDAO}
-     * @param t row to be updated by the user (includes the patient)
+     * updates a caregiver by calling the update-Method in the {@link DAOCaregiver}
+     * @param t row to be updated by the user (includes the caregiver)
      */
     private void doUpdate(TableColumn.CellEditEvent<Caregiver, String> t) {
         try {
@@ -139,15 +151,17 @@ public class AllCaregiverController {
     }
 
     /**
-     * handles a add-click-event. Creates a patient and calls the create method in the {@link PatientDAO}
+     * handles a add-click-event. Creates a patient and calls the create method in the {@link DAOCaregiver}
      */
     @FXML
     public void handleAdd() {
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
+        LocalDate dateOfBirth = DateConverter.convertStringToLocalDate(this.txtDateOfBirth.getText());
+        int permission_id = Integer.parseInt(this.txtPermission_id.getText());
         int telephone = Integer.parseInt(this.txtTelephone.getText());
         try {
-            Caregiver cg = new Caregiver(firstname, surname, telephone);
+            Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id,telephone);
             dao.create(cg);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,6 +176,8 @@ public class AllCaregiverController {
     private void clearTextfields() {
         this.txtFirstname.clear();
         this.txtSurname.clear();
+        this.txtDateOfBirth.clear();
+        this.txtPermission_id.clear();
         this.txtTelephone.clear();
 
     }

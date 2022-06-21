@@ -69,15 +69,14 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected ArrayList<Caregiver> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Caregiver> list = new ArrayList<Caregiver>();
-        Caregiver c = null;
+        ArrayList<Caregiver> list = new ArrayList<>();
+        Caregiver c;
         while (result.next()) {
-            c = new Caregiver( result.getString(1), result.getString(2), result.getInt(3));
+            c = new Caregiver( result.getString(1), result.getString(2), result.getDate(3).toLocalDate(), result.getLong(4),result.getInt(5));
             list.add(c);
         }
         return list;
     }
-
 
     /**
      * generates a <code>UPDATE</code>-Statement for a given patient
