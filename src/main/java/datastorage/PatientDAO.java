@@ -55,10 +55,10 @@ public class PatientDAO extends DAOimp<Patient> {
     @Override
     protected Patient getInstanceFromResultSet(ResultSet result) throws SQLException {
         Patient p;
-        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
-        p = new Patient(result.getInt(1), result.getString(2),
-                result.getString(3), date, result.getString(5),
-                result.getString(6));
+        LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
+        p = new Patient(result.getString(1),
+                result.getString(2), date, result.getString(4),
+                result.getString(5));
         return p;
     }
 
@@ -81,10 +81,10 @@ public class PatientDAO extends DAOimp<Patient> {
         ArrayList<Patient> list = new ArrayList<>();
         Patient p;
         while (result.next()) {
-            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(4));
-            p = new Patient(result.getInt(1), result.getString(2),
-                    result.getString(3), date,
-                    result.getString(5), result.getString(6));
+            LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
+            p = new Patient(result.getString(1),
+                    result.getString(2), date,
+                    result.getString(4), result.getString(5));
             list.add(p);
         }
         return list;

@@ -46,7 +46,7 @@ public class AllPatientController {
     @FXML
     TextField txtBirthday;
     @FXML
-    TextField txtCarelevel;
+    TextField txtCareLevel;
     @FXML
     TextField txtRoom;
 
@@ -186,7 +186,7 @@ public class AllPatientController {
         String firstname = this.txtFirstname.getText();
         String birthday = this.txtBirthday.getText();
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
-        String carelevel = this.txtCarelevel.getText();
+        String carelevel = this.txtCareLevel.getText();
         String room = this.txtRoom.getText();
         try {
             Patient p = new Patient(firstname, surname, date, carelevel, room);
@@ -205,7 +205,7 @@ public class AllPatientController {
         this.txtFirstname.clear();
         this.txtSurname.clear();
         this.txtBirthday.clear();
-        this.txtCarelevel.clear();
+        this.txtCareLevel.clear();
         this.txtRoom.clear();
     }
 }
