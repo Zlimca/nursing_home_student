@@ -1,6 +1,7 @@
 package model;
 
 import utils.DateConverter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,6 +15,14 @@ public class Treatment {
     private String description;
     private String remarks;
 
+    /**
+     * @param pid         Person ID
+     * @param date        Treatment Date
+     * @param begin       Start time of the treatment
+     * @param end         End time of the treatment
+     * @param description Brief description of the activity
+     * @param remarks     Remarks
+     **/
     public Treatment(long pid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.pid = pid;
@@ -26,6 +35,16 @@ public class Treatment {
         this.remarks = remarks;
     }
 
+    /**
+     * @param tid         Treatment ID
+     * @param pid         Person ID
+     * @param cid         Caregiver ID
+     * @param date        Treatment Date
+     * @param begin       Start time of the treatment
+     * @param end         End time of the treatment
+     * @param description Brief description of the activity
+     * @param remarks     Remarks
+     **/
     public Treatment(long tid, long pid, long cid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.tid = tid;

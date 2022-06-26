@@ -53,6 +53,9 @@ public class AllTreatmentController {
     private ArrayList<Patient> patientList;
     private ArrayList<Caregiver> caregiverList;
 
+    /**
+     * Initializes the UI for the treatments
+     **/
     public void initialize() {
         readAllAndShowInTableView();
         patientComboBox.setItems(patientComboBoxData);
@@ -69,6 +72,9 @@ public class AllTreatmentController {
         createCaregiverComboBoxData();
     }
 
+    /**
+     * Reads all treatments and adds them to the tableview
+     **/
     public void readAllAndShowInTableView() {
         this.tableviewContent.clear();
         patientComboBox.getSelectionModel().select(0);
@@ -82,6 +88,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Reads the patient data to add it into the combo box
+     **/
     private void createPatientComboBoxData() {
         PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
         try {
@@ -95,6 +104,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Reads the caregiver data to add it into the combo box
+     **/
     private void createCaregiverComboBoxData() {
         DAOCaregiver dao = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
@@ -108,6 +120,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Patient combo box handler
+     **/
     @FXML
     public void handlePatientComboBox() {
         String selectedItem = this.patientComboBox.getSelectionModel().getSelectedItem();
@@ -133,6 +148,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Caregiver combo box handler
+     **/
     @FXML
     public void handleCaregiverComboBox() {
         String selectedItem = this.caregiverComboBox.getSelectionModel().getSelectedItem();
@@ -158,6 +176,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Search function for searching a patient
+     **/
     private Patient searchPatientInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
@@ -167,6 +188,9 @@ public class AllTreatmentController {
         return null;
     }
 
+    /**
+     * Search function for searching a caregiver
+     **/
     private Caregiver searchCaregiverInList(String surname) {
         for (Caregiver caregiver : this.caregiverList) {
             if (caregiver.getSurname().equals(surname)) {
@@ -176,6 +200,9 @@ public class AllTreatmentController {
         return null;
     }
 
+    /**
+     * Handler for deleting a data set
+     **/
     @FXML
     public void handleDelete() {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
@@ -188,6 +215,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Handler for adding a data set
+     **/
     @FXML
     public void handleNewTreatment() {
         try {
@@ -203,6 +233,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Handler for mouse clicks
+     **/
     @FXML
     public void handleMouseClick() {
         tableView.setOnMouseClicked(event -> {
@@ -215,6 +248,9 @@ public class AllTreatmentController {
         });
     }
 
+    /**
+     * Opens and handles the window when creating a new treatment
+     **/
     public void newTreatmentWindow(Patient patient) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/NewTreatmentView.fxml"));
@@ -235,6 +271,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Opens and handles the information windows for a treatment
+     **/
     public void treatmentWindow(Treatment treatment) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/TreatmentView.fxml"));
