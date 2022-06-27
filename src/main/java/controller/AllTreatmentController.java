@@ -60,6 +60,8 @@ public class AllTreatmentController {
         readAllAndShowInTableView();
         patientComboBox.setItems(patientComboBoxData);
         patientComboBox.getSelectionModel().select(0);
+        caregiverComboBox.setItems(caregiverComboBoxData);
+        caregiverComboBox.getSelectionModel().select(0);
 
         this.colID.setCellValueFactory(new PropertyValueFactory<>("tid"));
         this.colPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
@@ -78,6 +80,7 @@ public class AllTreatmentController {
     public void readAllAndShowInTableView() {
         this.tableviewContent.clear();
         patientComboBox.getSelectionModel().select(0);
+        caregiverComboBox.getSelectionModel().select(0);
         this.dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         List<Treatment> allTreatments;
         try {
@@ -223,7 +226,9 @@ public class AllTreatmentController {
         try {
             String p = this.patientComboBox.getSelectionModel().getSelectedItem();
             Patient patient = searchPatientInList(p);
-            newTreatmentWindow(patient);
+            String c = this.caregiverComboBox.getSelectionModel().getSelectedItem();
+            Caregiver caregiver = searchCaregiverInList(c);
+            newTreatmentWindow(patient, caregiver);
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
@@ -251,7 +256,7 @@ public class AllTreatmentController {
     /**
      * Opens and handles the window when creating a new treatment
      **/
-    public void newTreatmentWindow(Patient patient) {
+    public void newTreatmentWindow(Patient patient, Caregiver caregiver) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/NewTreatmentView.fxml"));
             AnchorPane pane = loader.load();
@@ -260,7 +265,7 @@ public class AllTreatmentController {
             Stage stage = new Stage();
 
             NewTreatmentController controller = loader.getController();
-            controller.initialize(this, stage, patient);
+            controller.initialize(this, stage, patient, caregiver);
 
             stage.setScene(scene);
             stage.setResizable(false);

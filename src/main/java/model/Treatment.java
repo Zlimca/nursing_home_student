@@ -23,11 +23,10 @@ public class Treatment {
      * @param description Brief description of the activity
      * @param remarks     Remarks
      **/
-    public Treatment(long pid, LocalDate date, LocalTime begin,
+    public Treatment(long pid, long cid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.pid = pid;
-        //TODO: Add CID to Treatment attribute when Caregiver Class is created
-        //this.cid = cid;
+        this.cid = cid;
         this.date = date;
         this.begin = begin;
         this.end = end;

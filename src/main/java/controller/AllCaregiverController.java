@@ -2,7 +2,6 @@ package controller;
 
 import datastorage.DAOCaregiver;
 import datastorage.DAOFactory;
-import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +52,7 @@ public class AllCaregiverController {
     @FXML
     TextField txtPermission_id;
     @FXML
-    TextField txtTelephone;
+    TextField txtPhoneNumber;
 
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
     private DAOCaregiver dao;
@@ -80,7 +79,7 @@ public class AllCaregiverController {
         this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("permission_id"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("telephone"));
+        this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phonenumber"));
         this.colTelephone.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
@@ -159,9 +158,9 @@ public class AllCaregiverController {
         String firstname = this.txtFirstname.getText();
         LocalDate dateOfBirth = DateConverter.convertStringToLocalDate(this.txtDateOfBirth.getText());
         int permission_id = Integer.parseInt(this.txtPermission_id.getText());
-        int telephone = Integer.parseInt(this.txtTelephone.getText());
+        String phoneNumber = this.txtPhoneNumber.getText();
         try {
-            Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id,telephone);
+            Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id, phoneNumber);
             dao.create(cg);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +177,7 @@ public class AllCaregiverController {
         this.txtSurname.clear();
         this.txtDateOfBirth.clear();
         this.txtPermission_id.clear();
-        this.txtTelephone.clear();
+        this.txtPhoneNumber.clear();
 
     }
 }

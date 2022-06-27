@@ -27,8 +27,8 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
-        return String.format("INSERT INTO caregiver (firstname, surname, telephone) VALUES ('%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getTelephone());
+        return String.format("INSERT INTO caregiver (firstname, surname, phonenumber) VALUES ('%s', '%s', '%s')",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhoneNumber());
     }
 
     /**
@@ -72,7 +72,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         ArrayList<Caregiver> list = new ArrayList<>();
         Caregiver c;
         while (result.next()) {
-            c = new Caregiver( result.getString(1), result.getString(2), result.getDate(3).toLocalDate(), result.getLong(4),result.getInt(5));
+            c = new Caregiver(result.getString(1), result.getString(2), result.getDate(3).toLocalDate(), result.getLong(4), result.getString(5));
             list.add(c);
         }
         return list;
@@ -85,7 +85,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getUpdateStatementString(Caregiver caregiver) {
-        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', telephone = '%s' WHERE cid = %d", caregiver.getFirstName(), caregiver.getSurname(), caregiver.getTelephone(), caregiver.getCid());
+        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phonenumber = '%s' WHERE cid = %d", caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhoneNumber(), caregiver.getCid());
     }
 
     /**
