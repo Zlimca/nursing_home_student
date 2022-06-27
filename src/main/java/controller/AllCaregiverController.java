@@ -160,7 +160,7 @@ public class AllCaregiverController {
     public void handleDeleteRow() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
-            dao.deleteById(selectedItem.getcId());
+            dao.deleteById(selectedItem.getCId());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();

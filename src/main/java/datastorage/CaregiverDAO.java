@@ -98,9 +98,9 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     protected String getUpdateStatementString(Caregiver caregiver) {
         String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = '%s' WHERE" +
                         "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
-                caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getcId());
+                caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getCId());
         String query2 = String.format("UPDATE caregiver SET permission_id = '%s', phonenumber = '%s'WHERE cid = %d",
-                caregiver.getPermissionId(), caregiver.getPhoneNumber(), caregiver.getcId());
+                caregiver.getPermissionId(), caregiver.getPhoneNumber(), caregiver.getCId());
         return query1 + '\n' + query2;
 
             }
