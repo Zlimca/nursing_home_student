@@ -25,7 +25,8 @@ public class Patient extends Person {
      * @param roomNumber
      */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
-        super(firstName, surname, dateOfBirth);
+        super(firstName, surname);
+        this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;
     }
@@ -33,6 +34,7 @@ public class Patient extends Person {
     /**
      * constructs a patient from the given params.
      * @param pid
+     * @param prId Person ID
      * @param firstName
      * @param surname
      * @param dateOfBirth
@@ -40,9 +42,10 @@ public class Patient extends Person {
      * @param roomNumber
      */
     public Patient(long pid, long prId, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
-        super(prId, firstName, surname, dateOfBirth);
+        super(firstName, surname);
         this.pid = pid;
-        //this.prId = prId;
+        this.prId = prId;
+        this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;
     }
@@ -121,7 +124,7 @@ public class Patient extends Person {
      * @return string-representation of the patient
      */
     public String toString() {
-        return "Patient" + "\nID: " + this.pid +
+        return "Patient" + "\nMNID: " + this.pid +
                 "\nFirstname: " + this.getFirstName() +
                 "\nSurname: " + this.getSurname() +
                 "\nBirthday: " + this.dateOfBirth +
