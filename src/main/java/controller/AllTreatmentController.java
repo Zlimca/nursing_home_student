@@ -1,6 +1,6 @@
 package controller;
 
-import datastorage.DAOCaregiver;
+import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
@@ -111,7 +111,7 @@ public class AllTreatmentController {
      * Reads the caregiver data to add it into the combo box
      **/
     private void createCaregiverComboBoxData() {
-        DAOCaregiver dao = DAOFactory.getDAOFactory().createDAOCaregiver();
+        CaregiverDAO dao = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
             caregiverList = (ArrayList<Caregiver>) dao.readAll();
             this.caregiverComboBoxData.add("alle");
@@ -171,7 +171,7 @@ public class AllTreatmentController {
         Caregiver caregiver = searchCaregiverInList(selectedItem);
         if (caregiver != null) {
             try {
-                allTreatments = dao.readTreatmentsByPid(caregiver.getCid());
+                allTreatments = dao.readTreatmentsByPid(caregiver.getcId());
                 this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();

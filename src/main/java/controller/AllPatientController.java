@@ -92,7 +92,7 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event){
-        event.getRowValue().setFirstName(event.getNewValue());
+        event.getRowValue().setFirstname(event.getNewValue());
         doUpdate(event);
     }
 

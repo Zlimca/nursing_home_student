@@ -4,66 +4,58 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Caregiver extends Person{
+public class Caregiver extends Person {
 
-        private long cid;
-        private long prId;
-        private LocalDate dateOfBirth;
-        private long permission_id;
+    private long cId;
+    private long permissionId;
 
-        private String phoneNumber;
+    private String phoneNumber;
 
-        private List<Caregiver> allCaregivers = new ArrayList<Caregiver>();
+    private List<Caregiver> allCaregivers = new ArrayList<Caregiver>();
 
     /**
      * constructs a patient from the given params.
      *
-     * @param firstName
+     * @param firstname
      * @param surname
      * @param dateOfBirth
-     * @param permission_id
+     * @param permissionId
      * @param phoneNumber
      */
-    public Caregiver(String firstName, String surname, LocalDate dateOfBirth, long permission_id, String phoneNumber) {
-        super(firstName, surname, dateOfBirth);
-        this.permission_id = permission_id;
+    public Caregiver(String firstname, String surname, LocalDate dateOfBirth, long permissionId, String phoneNumber) {
+        super(firstname, surname, dateOfBirth);
+        this.permissionId = permissionId;
         this.phoneNumber = phoneNumber;
     }
 
-       /**
-        * constructs a patient from the given params.
-        * @param cid
-        * @param prId
-        * @param firstName
-        * @param surname
-        * @param dateOfBirth
-        * @param permission_id
-        * @param phoneNumber
-        */
-       public Caregiver(long cid, long prId, String firstName, String surname, LocalDate dateOfBirth, long permission_id, String phoneNumber) {
-           super(prId, firstName, surname, dateOfBirth);
-           this.cid = cid;
-           this.permission_id = permission_id;
-           this.phoneNumber = phoneNumber;
-       }
+    /**
+     * constructs a patient from the given params.
+     *
+     * @param cId
+     * @param prId
+     * @param firstname
+     * @param surname
+     * @param dateOfBirth
+     * @param permissionId
+     * @param phoneNumber
+     */
+    public Caregiver(long cId, long prId, String firstname, String surname, LocalDate dateOfBirth,
+                     long permissionId, String phoneNumber) {
+        super(prId, firstname, surname, dateOfBirth);
+        this.cId = cId;
+        this.permissionId = permissionId;
+        this.phoneNumber = phoneNumber;
+    }
 
     /**
      *
-         * @return caregiver id
-         */
-        public long getCid() {
-            return cid;
-        }
-
-        /**
-        *
-        * @return person id
-        */
-        public long getPrId() {
-        return prId;
+     * @return caregiver id
+     */
+    public long getcId() {
+        return cId;
     }
 
-        /**
+    /**
          *
          * @return telephone as string
          */
@@ -73,11 +65,13 @@ public class Caregiver extends Person{
 
     /**
      *
-        * @return permission_id as string
-        */
-        public long getPermission_id(){ return permission_id;}
+     * @return permissionId as string
+     */
+    public long getPermissionId() {
+        return permissionId;
+    }
 
-        /**
+    /**
          * adds a caregiver to the treatment-list, if it does not already contain it.
          * @param caregiver Caregiver
          * @return true if the caregiver was not already part of the list. otherwise false
@@ -95,11 +89,11 @@ public class Caregiver extends Person{
          * @return string-representation of the caregiver
          */
         public String toString() {
-            return "Caregiver" + "\nID: " + this.cid +
-                    "\nFirstname: " + this.getFirstName() +
+            return "Caregiver" + "\nID: " + this.cId +
+                    "\nFirstname: " + this.getFirstname() +
                     "\nSurname: " + this.getSurname() +
                     "\nBirthday: " + this.getDateOfBirth() +
-                    "\nPermission_id: " + this.permission_id +
+                    "\nPermission_id: " + this.permissionId +
                     "\nPhoneNumber: " + this.phoneNumber +
                     "\n";
         }

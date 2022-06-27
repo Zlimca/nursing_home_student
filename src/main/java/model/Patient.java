@@ -1,6 +1,7 @@
 package model;
 
 import utils.DateConverter;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +123,7 @@ public class Patient extends Person {
      */
     public String toString() {
         return "Patient" + "\nID: " + this.pid +
-                "\nFirstname: " + this.getFirstName() +
+                "\nFirstname: " + this.getFirstname() +
                 "\nSurname: " + this.getSurname() +
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
