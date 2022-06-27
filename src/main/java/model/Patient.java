@@ -34,16 +34,17 @@ public class Patient extends Person {
     /**
      * constructs a patient from the given params.
      * @param pid
+     * @param prId Person ID
      * @param firstName
      * @param surname
      * @param dateOfBirth
      * @param careLevel
      * @param roomNumber
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
+    public Patient(long pid, long prId, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
         super(firstName, surname);
         this.pid = pid;
-        //this.prId = prId;
+        this.prId = prId;
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;
