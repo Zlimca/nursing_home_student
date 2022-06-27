@@ -2,6 +2,7 @@ package datastorage;
 
 import model.Patient;
 import utils.DateConverter;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class PatientDAO extends DAOimp<Patient> {
     @Override
     protected String getCreateStatementString(Patient patient) {
         String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
-                patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth());
+                patient.getFirstname(), patient.getSurname(), patient.getDateOfBirth());
         String query2 = String.format("INSERT INTO patient (prid, carelevel, roomnumber) VALUES (IDENTITY(), '%s', '%s')",
                 patient.getCareLevel(), patient.getRoomNumber());
         return query1 + '\n' + query2;
@@ -99,7 +100,7 @@ public class PatientDAO extends DAOimp<Patient> {
     protected String getUpdateStatementString(Patient patient) {
         String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = %s WHERE " +
                         "PRID = (SELECT pid FROM patient WHERE pid = %s)",
-                patient.getFirstName(), patient.getSurname(), patient.getDateOfBirth().toString(), patient.getPid());
+                patient.getFirstname(), patient.getSurname(), patient.getDateOfBirth().toString(), patient.getPid());
         String query2 = String.format("UPDATE patient SET carelevel = '%s', roomnumber = '%s' WHERE pid = %d",
                 patient.getCareLevel(), patient.getRoomNumber(), patient.getPid());
         return query1 + '\n' + query2;

@@ -12,13 +12,14 @@ import java.util.ArrayList;
 /**
  * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
  */
-public class DAOCaregiver extends DAOimp<Caregiver> {
+public class CaregiverDAO extends DAOimp<Caregiver> {
 
     /**
      * constructs Onbject. Calls the Constructor from <code>DAOImp</code> to store the connection.
+     *
      * @param conn
      */
-    public DAOCaregiver(Connection conn) {
+    public CaregiverDAO(Connection conn) {
         super(conn);
     }
 
@@ -30,9 +31,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
         String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth());
+                caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth());
         String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
-                caregiver.getPhoneNumber());
+                caregiver.getPermissionId(), caregiver.getPhoneNumber());
         return query1 + '\n' + query2;
     }
 
@@ -43,7 +44,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT caregiver.*, person.* FROM patient INNER JOIN person ON caregiver.prid WHERE cid = %d", key);
+        return String.format("SELECT caregiver.*, person.FIRSTNAME, person.SURNAME, person.DATEOFBIRTH FROM patient INNER JOIN person ON caregiver.prid WHERE cid = %d", key);
     }
 
     /**
@@ -54,9 +55,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
     @Override
     protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
         Caregiver c;
-        c = new Caregiver(result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
-                result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
+        c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
+                result.getString(6), result.getDate(7).toLocalDate(),
+                result.getLong(3), result.getString(4));
         return c;
     }
 
@@ -66,7 +67,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadAllStatementString() {
-        return "SELECT caregiver.*, person.* FROM caregiver INNER JOIN person ON caregiver.prid = person.prid";
+        return "SELECT caregiver.*, person.FIRSTNAME, person.SURNAME, person.DATEOFBIRTH FROM caregiver INNER JOIN person ON caregiver.prid = person.prid";
     }
 
     /**
@@ -80,9 +81,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         Caregiver c;
         while (result.next()) {
             //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
-            c = new Caregiver(result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
-                    result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
+            c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
+                    result.getString(6), result.getDate(7).toLocalDate(),
+                    result.getLong(3), result.getString(4));
             list.add(c);
         }
         return list;
@@ -97,9 +98,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
     protected String getUpdateStatementString(Caregiver caregiver) {
         String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = '%s' WHERE" +
                         "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getCid());
+                caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getcId());
         String query2 = String.format("UPDATE caregiver SET permission_id = '%s', phonenumber = '%s'WHERE cid = %d",
-                caregiver.getPermission_id(), caregiver.getPhoneNumber());
+                caregiver.getPermissionId(), caregiver.getPhoneNumber(), caregiver.getcId());
         return query1 + '\n' + query2;
 
             }

@@ -1,6 +1,6 @@
 package controller;
 
-import datastorage.DAOCaregiver;
+import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
@@ -29,15 +29,15 @@ public class AllCaregiverController {
     @FXML
     private TableColumn<Caregiver, Integer> colID;
     @FXML
-    private TableColumn<Caregiver, String> colFirstName;
+    TextField txtPermissionId;
     @FXML
     private TableColumn<Caregiver, String> colSurname;
     @FXML
     private TableColumn<Caregiver, String> colDateOfBirth;
     @FXML
-    private TableColumn<Caregiver, String> colPermission_id;
+    private TableColumn<Caregiver, String> colFirstname;
     @FXML
-    private TableColumn<Caregiver, String> colTelephone;
+    private TableColumn<Caregiver, String> colPermission;
 
     @FXML
     Button btnDelete;
@@ -50,12 +50,12 @@ public class AllCaregiverController {
     @FXML
     TextField txtDateOfBirth;
     @FXML
-    TextField txtPermission_id;
+    private TableColumn<Caregiver, String> colPhoneNumber;
     @FXML
     TextField txtPhoneNumber;
 
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
-    private DAOCaregiver dao;
+    private CaregiverDAO dao;
 
     /**
      * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
@@ -63,24 +63,24 @@ public class AllCaregiverController {
     public void initialize() {
         readAllAndShowInTableView();
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Caregiver, Integer>("cid"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<Caregiver, Integer>("cId"));
 
-        //CellValuefactory zum Anzeigen der Daten in der TableView
-        this.colFirstName.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("firstName"));
+        //CellValueFactory zum Anzeigen der Daten in der TableView
+        this.colFirstname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("firstname"));
         //CellFactory zum Schreiben innerhalb der Tabelle
-        this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.colFirstname.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("dateOfBirth"));
-        this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("dateOfBirth"));
+        this.colDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("permission_id"));
-        this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.colPermission.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("permissionId"));
+        this.colPermission.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phonenumber"));
-        this.colTelephone.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.colPhoneNumber.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phoneNumber"));
+        this.colPhoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
         this.tableView.setItems(this.tableviewContent);
@@ -92,22 +92,42 @@ public class AllCaregiverController {
      */
     @FXML
     public void handleOnEditFirstname(TableColumn.CellEditEvent<Caregiver, String> event){
-        event.getRowValue().setFirstName(event.getNewValue());
+        event.getRowValue().setFirstname(event.getNewValue());
         doUpdate(event);
     }
 
     /**
      * handles new surname value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditSurname(TableColumn.CellEditEvent<Caregiver, String> event){
+    public void handleOnEditSurname(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setSurname(event.getNewValue());
+        doUpdate(event);
+    }
+
+    @FXML
+    public void handleOnEditPermission(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setSurname(event.getNewValue());
+        doUpdate(event);
+    }
+
+    @FXML
+    public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Caregiver, String> event) {
+        event.getRowValue().setSurname(event.getNewValue());
+        doUpdate(event);
+    }
+
+    @FXML
+    public void handleOnEditPhoneNumber(TableColumn.CellEditEvent<Caregiver, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         doUpdate(event);
     }
 
     /**
-     * updates a caregiver by calling the update-Method in the {@link DAOCaregiver}
+     * updates a caregiver by calling the update-Method in the {@link CaregiverDAO}
+     *
      * @param t row to be updated by the user (includes the caregiver)
      */
     private void doUpdate(TableColumn.CellEditEvent<Caregiver, String> t) {
@@ -119,7 +139,7 @@ public class AllCaregiverController {
     }
 
     /**
-     * calls readAll in {@link DAOCaregiver} and shows caregiver in the table
+     * calls readAll in {@link CaregiverDAO} and shows caregiver in the table
      */
     private void readAllAndShowInTableView() {
         this.tableviewContent.clear();
@@ -127,22 +147,20 @@ public class AllCaregiverController {
         List<Caregiver> allCaregiver;
         try {
             allCaregiver = dao.readAll();
-            for (Caregiver cg : allCaregiver) {
-                this.tableviewContent.add(cg);
-            }
+            this.tableviewContent.addAll(allCaregiver);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * handles a delete-click-event. Calls the delete methods in the {@link DAOCaregiver} and {@link TreatmentDAO}
+     * handles a delete-click-event. Calls the delete methods in the {@link CaregiverDAO} and {@link TreatmentDAO}
      */
     @FXML
     public void handleDeleteRow() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
-            dao.deleteById(selectedItem.getCid());
+            dao.deleteById(selectedItem.getcId());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -150,14 +168,14 @@ public class AllCaregiverController {
     }
 
     /**
-     * handles a add-click-event. Creates a patient and calls the create method in the {@link DAOCaregiver}
+     * handles a add-click-event. Creates a patient and calls the create method in the {@link CaregiverDAO}
      */
     @FXML
     public void handleAdd() {
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
         LocalDate dateOfBirth = DateConverter.convertStringToLocalDate(this.txtDateOfBirth.getText());
-        int permission_id = Integer.parseInt(this.txtPermission_id.getText());
+        int permission_id = Integer.parseInt(this.txtPermissionId.getText());
         String phoneNumber = this.txtPhoneNumber.getText();
         try {
             Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id, phoneNumber);
@@ -176,7 +194,7 @@ public class AllCaregiverController {
         this.txtFirstname.clear();
         this.txtSurname.clear();
         this.txtDateOfBirth.clear();
-        this.txtPermission_id.clear();
+        this.txtPermissionId.clear();
         this.txtPhoneNumber.clear();
 
     }

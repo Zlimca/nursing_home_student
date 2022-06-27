@@ -4,29 +4,29 @@ import java.time.LocalDate;
 
 public abstract class Person {
     private long prId;
-    private String firstName;
+    private String firstname;
     private String surname;
     private LocalDate dateOfBirth;
 
-    public Person(String firstName, String surname, LocalDate dateOfBirth) {
-        this.firstName = firstName;
+    public Person(String firstname, String surname, LocalDate dateOfBirth) {
+        this.firstname = firstname;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Person(long prId, String firstName, String surname, LocalDate dateOfBirth) {
+    public Person(long prId, String firstname, String surname, LocalDate dateOfBirth) {
         this.prId = prId;
-        this.firstName = firstName;
+        this.firstname = firstname;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getSurname() {

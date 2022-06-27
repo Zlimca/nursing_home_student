@@ -1,6 +1,6 @@
 package controller;
 
-import datastorage.DAOCaregiver;
+import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
@@ -48,10 +48,10 @@ public class TreatmentController {
         this.stage = stage;
         this.controller= controller;
         PatientDAO pDao = DAOFactory.getDAOFactory().createPatientDAO();
-        DAOCaregiver daoCaregiver = DAOFactory.getDAOFactory().createDAOCaregiver();
+        CaregiverDAO caregiverDAO = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
             this.patient = pDao.read(treatment.getPid());
-            this.caregiver = daoCaregiver.read(treatment.getCid());
+            this.caregiver = caregiverDAO.read(treatment.getCid());
             this.treatment = treatment;
             showData();
         } catch (SQLException e) {
@@ -60,9 +60,9 @@ public class TreatmentController {
     }
 
     private void showData() {
-        this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstName());
+        this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstname());
         this.lblCarelevel.setText(patient.getCareLevel());
-        this.lblCaregiverName.setText(caregiver.getSurname() + ", " + caregiver.getFirstName());
+        this.lblCaregiverName.setText(caregiver.getSurname() + ", " + caregiver.getFirstname());
         this.lblCaregiverPhone.setText(caregiver.getPhoneNumber());
         LocalDate date = treatment.getDate();
         this.datepicker.setValue(date);

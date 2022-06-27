@@ -52,12 +52,12 @@ public class NewTreatmentController {
     }
 
     private void showPatientData() {
-        this.lblFirstname.setText(patient.getFirstName());
+        this.lblFirstname.setText(patient.getFirstname());
         this.lblSurname.setText(patient.getSurname());
     }
 
     private void showCaregiverData() {
-        this.lblCaregiverFirstname.setText(caregiver.getFirstName());
+        this.lblCaregiverFirstname.setText(caregiver.getFirstname());
         this.lblCaregiverSurname.setText(caregiver.getSurname());
     }
 
@@ -68,7 +68,7 @@ public class NewTreatmentController {
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), caregiver.getCid(), date, begin, end, description, remarks);
+        Treatment treatment = new Treatment(patient.getPid(), caregiver.getcId(), date, begin, end, description, remarks);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();
