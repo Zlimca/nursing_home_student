@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class Patient extends Person {
     private long pid;
+    private long prId;
     private LocalDate dateOfBirth;
     private String careLevel;
-    private String roomnumber;
-    private String assets;
+    private String roomNumber;
     private List<Treatment> allTreatments = new ArrayList<Treatment>();
 
     /**
@@ -22,15 +22,13 @@ public class Patient extends Person {
      * @param surname
      * @param dateOfBirth
      * @param careLevel
-     * @param roomnumber
-     * @param assets
+     * @param roomNumber
      */
-    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber, String assets) {
+    public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
         super(firstName, surname);
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
-        this.roomnumber = roomnumber;
-        this.assets = assets;
+        this.roomNumber = roomNumber;
     }
 
     /**
@@ -40,16 +38,15 @@ public class Patient extends Person {
      * @param surname
      * @param dateOfBirth
      * @param careLevel
-     * @param roomnumber
-     * @param assets
+     * @param roomNumber
      */
-    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber, String assets) {
+    public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
         super(firstName, surname);
         this.pid = pid;
+        //this.prId = prId;
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
-        this.roomnumber = roomnumber;
-        this.assets = assets;
+        this.roomNumber = roomNumber;
     }
 
     /**
@@ -64,8 +61,8 @@ public class Patient extends Person {
      *
      * @return date of birth as a string
      */
-    public String getDateOfBirth() {
-        return dateOfBirth.toString();
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
     /**
@@ -73,8 +70,7 @@ public class Patient extends Person {
      * @param dateOfBirth as string in the following format: YYYY-MM-DD
      */
     public void setDateOfBirth(String dateOfBirth) {
-        LocalDate birthday = DateConverter.convertStringToLocalDate(dateOfBirth);
-        this.dateOfBirth = birthday;
+        this.dateOfBirth = DateConverter.convertStringToLocalDate(dateOfBirth);
     }
 
     /**
@@ -97,32 +93,16 @@ public class Patient extends Person {
      *
      * @return roomNumber as string
      */
-    public String getRoomnumber() {
-        return roomnumber;
+    public String getRoomNumber() {
+        return roomNumber;
     }
 
     /**
      *
-     * @param roomnumber
+     * @param roomNumber
      */
-    public void setRoomnumber(String roomnumber) {
-        this.roomnumber = roomnumber;
-    }
-
-    /**
-     *
-     * @return assets as string
-     */
-    public String getAssets() {
-        return assets;
-    }
-
-    /**
-     *
-     * @param assets
-     */
-    public void setAssets(String assets) {
-        this.assets = assets;
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     /**
@@ -148,8 +128,7 @@ public class Patient extends Person {
                 "\nSurname: " + this.getSurname() +
                 "\nBirthday: " + this.dateOfBirth +
                 "\nCarelevel: " + this.careLevel +
-                "\nRoomnumber: " + this.roomnumber +
-                "\nAssets: " + this.assets +
+                "\nRoomnumber: " + this.roomNumber +
                 "\n";
     }
 }
