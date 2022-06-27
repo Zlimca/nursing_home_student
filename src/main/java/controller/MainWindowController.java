@@ -19,7 +19,7 @@ public class MainWindowController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        AllPatientController controller = loader.getController();
+        AllPatientController controller = loader.getController(); //TODO kann das weg?
     }
 
     @FXML
