@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Patient extends Person {
     private long pid;
-    private long prId;
     private LocalDate dateOfBirth;
     private String careLevel;
     private String roomNumber;
@@ -25,7 +24,7 @@ public class Patient extends Person {
      * @param roomNumber
      */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
-        super(firstName, surname);
+        super(firstName, surname, dateOfBirth);
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;
@@ -42,9 +41,8 @@ public class Patient extends Person {
      * @param roomNumber
      */
     public Patient(long pid, long prId, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
-        super(firstName, surname);
+        super(prId, firstName, surname, dateOfBirth);
         this.pid = pid;
-        this.prId = prId;
         this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;

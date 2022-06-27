@@ -8,9 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Caregiver;
 import model.Patient;
 import model.Treatment;
 import utils.DateConverter;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +22,10 @@ public class NewTreatmentController {
     private Label lblSurname;
     @FXML
     private Label lblFirstname;
+    @FXML
+    private Label lblCaregiverSurname;
+    @FXML
+    private Label lblCaregiverFirstname;
     @FXML
     private TextField txtBegin;
     @FXML
@@ -33,28 +39,36 @@ public class NewTreatmentController {
 
     private AllTreatmentController controller;
     private Patient patient;
+    private Caregiver caregiver;
     private Stage stage;
 
-    public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
-        this.controller= controller;
+    public void initialize(AllTreatmentController controller, Stage stage, Patient patient, Caregiver caregiver) {
+        this.controller = controller;
         this.patient = patient;
+        this.caregiver = caregiver;
         this.stage = stage;
         showPatientData();
+        showCaregiverData();
     }
 
-    private void showPatientData(){
+    private void showPatientData() {
         this.lblFirstname.setText(patient.getFirstName());
         this.lblSurname.setText(patient.getSurname());
     }
 
+    private void showCaregiverData() {
+        this.lblCaregiverFirstname.setText(caregiver.getFirstName());
+        this.lblCaregiverSurname.setText(caregiver.getSurname());
+    }
+
     @FXML
-    public void handleAdd(){
+    public void handleAdd() {
         LocalDate date = this.datepicker.getValue();
         LocalTime begin = DateConverter.convertStringToLocalTime(txtBegin.getText());
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), date, begin, end, description, remarks);
+        Treatment treatment = new Treatment(patient.getPid(), caregiver.getCid(), date, begin, end, description, remarks);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();

@@ -5,9 +5,7 @@ import model.Caregiver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-//language=SQL
 
 /**
  * Implements the Interface <code>DAOImp</code>. Overrides methods to generate specific patient-SQL-queries.
@@ -29,11 +27,8 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
-        String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth());
-        String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
-                caregiver.getTelephone());
-        return query1 + '\n' + query2;
+        return String.format("INSERT INTO caregiver (firstname, surname, phonenumber) VALUES ('%s', '%s', '%s')",
+                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhoneNumber());
     }
 
     /**
@@ -43,30 +38,28 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT caregiver.*, person.* FROM patient INNER JOIN person ON caregiver.prid WHERE cid = %d", key);
+        return String.format("SELECT * FROM caregiver WHERE cid = %d", key);
     }
 
-    /**
-     * maps a <code>ResultSet</code> to a <code>Caregiver</code>
-     * @param result ResultSet with a single row. Columns will be mapped to a caregiver-object.
-     * @return caregiver with the data from the resultSet.
-     */
     @Override
-    protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
-        Caregiver c;
-        c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
-                    result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
-        return c;
+    protected Caregiver getInstanceFromResultSet(ResultSet set) throws SQLException {
+        return null;
     }
 
     /**
-     * generates a <code>SELECT</code>-Statement for all caregivers.
+     * maps a <code>ResultSet</code> to a <code>Patient</code>
+     * @param result ResultSet with a single row. Columns will be mapped to a patient-object.
+     * @return patient with the data from the resultSet.
+     */
+
+
+    /**
+     * generates a <code>SELECT</code>-Statement for all patients.
      * @return <code>String</code> with the generated SQL.
      */
     @Override
     protected String getReadAllStatementString() {
-        return "SELECT caregiver.*, person.* FROM caregiver INNER JOIN person ON caregiver.prid = person.prid";
+        return "SELECT * FROM caregiver";
     }
 
     /**
@@ -79,10 +72,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         ArrayList<Caregiver> list = new ArrayList<>();
         Caregiver c;
         while (result.next()) {
-            //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
-            c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
-                    result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
+            c = new Caregiver(result.getString(1), result.getString(2), result.getDate(3).toLocalDate(), result.getLong(4), result.getString(5));
             list.add(c);
         }
         return list;
@@ -95,14 +85,8 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getUpdateStatementString(Caregiver caregiver) {
-        String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = '%s' WHERE"  +
-               "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
-                caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getCid());
-        String query2 = String.format("UPDATE caregiver SET permission_id = '%s', phonenumber = '%s'WHERE cid = %d",
-                caregiver.getPermission_id(), caregiver.getTelephone());
-        return query1 + '\n' + query2;
-
-            }
+        return String.format("UPDATE caregiver SET firstname = '%s', surname = '%s', phonenumber = '%s' WHERE cid = %d", caregiver.getFirstName(), caregiver.getSurname(), caregiver.getPhoneNumber(), caregiver.getCid());
+    }
 
     /**
      * generates a <code>delete</code>-Statement for a given key
@@ -111,8 +95,6 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getDeleteStatementString(long key) {
-        String query1 = String.format("DELETE FROM person WHERE prid = (SELECT caregiver.prid FROM caregiver WHERE caregiver.prid = %d)", key);
-        String query2 = String.format("DELETE FROM caregiver WHERE cid=%d", key);
-        return query1 + '\n' + query2;
+        return String.format("Delete FROM caregiver WHERE cid=%d", key);
     }
 }

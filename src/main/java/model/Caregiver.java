@@ -1,7 +1,5 @@
 package model;
 
-import utils.DateConverter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +11,24 @@ public class Caregiver extends Person{
         private LocalDate dateOfBirth;
         private long permission_id;
 
-        private int telephone;
+        private String phoneNumber;
 
         private List<Caregiver> allCaregivers = new ArrayList<Caregiver>();
 
-        /**
-         * constructs a patient from the given params.
-         * @param firstName
-         * @param surname
-         * @param dateOfBirth
-         * @param permission_id
-         * @param telephone
-         */
-        public Caregiver(String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone) {
-            super(firstName, surname, dateOfBirth);
-            this.permission_id = permission_id;
-            this.telephone = telephone;
-        }
+    /**
+     * constructs a patient from the given params.
+     *
+     * @param firstName
+     * @param surname
+     * @param dateOfBirth
+     * @param permission_id
+     * @param phoneNumber
+     */
+    public Caregiver(String firstName, String surname, LocalDate dateOfBirth, long permission_id, String phoneNumber) {
+        super(firstName, surname, dateOfBirth);
+        this.permission_id = permission_id;
+        this.phoneNumber = phoneNumber;
+    }
 
        /**
         * constructs a patient from the given params.
@@ -39,17 +38,17 @@ public class Caregiver extends Person{
         * @param surname
         * @param dateOfBirth
         * @param permission_id
-        * @param telephone
+        * @param phoneNumber
         */
-        public Caregiver(long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone) {
-            super(prId,firstName, surname, dateOfBirth);
-            this.cid = cid;
-            this.permission_id = permission_id;
-            this.telephone = telephone;
-        }
+       public Caregiver(long cid, long prId, String firstName, String surname, LocalDate dateOfBirth, long permission_id, String phoneNumber) {
+           super(prId, firstName, surname, dateOfBirth);
+           this.cid = cid;
+           this.permission_id = permission_id;
+           this.phoneNumber = phoneNumber;
+       }
 
-        /**
-         *
+    /**
+     *
          * @return caregiver id
          */
         public long getCid() {
@@ -68,12 +67,12 @@ public class Caregiver extends Person{
          *
          * @return telephone as string
          */
-        public int getTelephone() {
-            return telephone;
+        public String getPhoneNumber() {
+            return phoneNumber;
         }
 
-        /**
-        *
+    /**
+     *
         * @return permission_id as string
         */
         public long getPermission_id(){ return permission_id;}
@@ -101,7 +100,7 @@ public class Caregiver extends Person{
                     "\nSurname: " + this.getSurname() +
                     "\nBirthday: " + this.getDateOfBirth() +
                     "\nPermission_id: " + this.permission_id +
-                    "\nPhoneNumber: " + this.telephone +
+                    "\nPhoneNumber: " + this.phoneNumber +
                     "\n";
         }
     }
