@@ -32,7 +32,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
                 caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth());
         String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
-                caregiver.getPhoneNumber());
+                caregiver.getTelephone());
         return query1 + '\n' + query2;
     }
 
@@ -56,7 +56,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         Caregiver c;
         c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
                     result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
+                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
         return c;
     }
 
@@ -82,7 +82,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
             //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
             c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
                     result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
+                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
             list.add(c);
         }
         return list;
@@ -99,7 +99,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
                "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
                 caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getCid());
         String query2 = String.format("UPDATE caregiver SET permission_id = '%s', phonenumber = '%s'WHERE cid = %d",
-                caregiver.getPermission_id(), caregiver.getPhoneNumber());
+                caregiver.getPermission_id(), caregiver.getTelephone());
         return query1 + '\n' + query2;
 
             }
