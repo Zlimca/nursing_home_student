@@ -19,7 +19,7 @@ public class MainWindowController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        AllPatientController controller = loader.getController();
+        AllPatientController controller = loader.getController(); //TODO kann das weg?
     }
 
     @FXML
@@ -31,5 +31,16 @@ public class MainWindowController {
             ex.printStackTrace();
         }
         AllTreatmentController controller = loader.getController();
+    }
+
+    @FXML
+    private void handleShowAllCaregiver(ActionEvent e) {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaregiverView.fxml"));
+        try {
+            mainBorderPane.setCenter(loader.load());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        AllCaregiverController controller = loader.getController();
     }
 }
