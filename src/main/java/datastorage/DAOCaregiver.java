@@ -32,7 +32,7 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
                 caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth());
         String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
-                caregiver.getTelephone());
+                caregiver.getPhoneNumber());
         return query1 + '\n' + query2;
     }
 
@@ -54,9 +54,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
     @Override
     protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
         Caregiver c;
-        c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
-                    result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
+        c = new Caregiver(result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
+                result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
+                result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
         return c;
     }
 
@@ -80,9 +80,9 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
         Caregiver c;
         while (result.next()) {
             //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
-            c = new Caregiver( result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
+            c = new Caregiver(result.getInt("CID"), result.getInt("PRID"), result.getString("FIRSTNAME"),
                     result.getString("SURNAME"), result.getDate("DATEOFBIRTH").toLocalDate(),
-                    result.getLong("PERMISSION_ID"), result.getInt("PHONENUMBER"));
+                    result.getLong("PERMISSION_ID"), result.getString("PHONENUMBER"));
             list.add(c);
         }
         return list;
@@ -95,11 +95,11 @@ public class DAOCaregiver extends DAOimp<Caregiver> {
      */
     @Override
     protected String getUpdateStatementString(Caregiver caregiver) {
-        String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = '%s' WHERE"  +
-               "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
+        String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = '%s' WHERE" +
+                        "PRID = (SELECT pid FROM patient WHERE pid = '%s')",
                 caregiver.getFirstName(), caregiver.getSurname(), caregiver.getDateOfBirth(), caregiver.getCid());
         String query2 = String.format("UPDATE caregiver SET permission_id = '%s', phonenumber = '%s'WHERE cid = %d",
-                caregiver.getPermission_id(), caregiver.getTelephone());
+                caregiver.getPermission_id(), caregiver.getPhoneNumber());
         return query1 + '\n' + query2;
 
             }
