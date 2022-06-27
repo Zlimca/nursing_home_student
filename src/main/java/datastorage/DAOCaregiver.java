@@ -5,8 +5,8 @@ import model.Caregiver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+
 //language=SQL
 
 /**

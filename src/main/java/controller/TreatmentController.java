@@ -1,20 +1,26 @@
 package controller;
 
+import datastorage.DAOCaregiver;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Caregiver;
 import model.Patient;
 import model.Treatment;
-import utils.DateConverter;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class TreatmentController {
     @FXML
     private Label lblPatientName;
+    @FXML
+    private Label lblCaregiverName;
+    @FXML
+    private Label lblCaregiverPhone;
     @FXML
     private Label lblCarelevel;
     @FXML
@@ -35,14 +41,17 @@ public class TreatmentController {
     private AllTreatmentController controller;
     private Stage stage;
     private Patient patient;
+    private Caregiver caregiver;
     private Treatment treatment;
 
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
         this.controller= controller;
         PatientDAO pDao = DAOFactory.getDAOFactory().createPatientDAO();
+        DAOCaregiver daoCaregiver = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
-            this.patient = pDao.read((int) treatment.getPid());
+            this.patient = pDao.read(treatment.getPid());
+            this.caregiver = daoCaregiver.read(treatment.getCid());
             this.treatment = treatment;
             showData();
         } catch (SQLException e) {
@@ -50,9 +59,11 @@ public class TreatmentController {
         }
     }
 
-    private void showData(){
-        this.lblPatientName.setText(patient.getSurname()+", "+patient.getFirstName());
+    private void showData() {
+        this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstName());
         this.lblCarelevel.setText(patient.getCareLevel());
+        this.lblCaregiverName.setText(caregiver.getSurname() + ", " + caregiver.getFirstName());
+        this.lblCaregiverPhone.setText(caregiver.getPhoneNumber());
         LocalDate date = treatment.getDate();
         this.datepicker.setValue(date);
         this.txtBegin.setText(this.treatment.getBegin().toString());

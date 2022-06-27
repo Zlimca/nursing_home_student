@@ -1,16 +1,20 @@
 package controller;
 
+import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
 import utils.DateConverter;
-import datastorage.DAOFactory;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -59,23 +63,23 @@ public class AllPatientController {
     public void initialize() {
         readAllAndShowInTableView();
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("pid"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("pid"));
 
         //CellValuefactory zum Anzeigen der Daten in der TableView
-        this.colFirstName.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
+        this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         //CellFactory zum Schreiben innerhalb der Tabelle
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Patient, String>("surname"));
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<Patient, String>("dateOfBirth"));
+        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         this.colDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colCareLevel.setCellValueFactory(new PropertyValueFactory<Patient, String>("careLevel"));
+        this.colCareLevel.setCellValueFactory(new PropertyValueFactory<>("careLevel"));
         this.colCareLevel.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colRoom.setCellValueFactory(new PropertyValueFactory<Patient, String>("roomnumber"));
+        this.colRoom.setCellValueFactory(new PropertyValueFactory<>("roomnumber"));
         this.colRoom.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
@@ -153,9 +157,7 @@ public class AllPatientController {
         List<Patient> allPatients;
         try {
             allPatients = dao.readAll();
-            for (Patient p : allPatients) {
-                this.tableviewContent.add(p);
-            }
+            this.tableviewContent.addAll(allPatients);
         } catch (SQLException e) {
             e.printStackTrace();
         }
