@@ -31,9 +31,13 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getCreateStatementString(Patient patient) {
-        String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
+        String query1 = String.format("SELECT PRID " +
+                        "FROM person " +
+                        "INSERT INTO person (firstname, surname, dateOfBirth) " +
+                        "VALUES('%s', '%s', '%s')",
                 patient.getFirstname(), patient.getSurname(), patient.getDateOfBirth());
-        String query2 = String.format("INSERT INTO patient (prid, carelevel, roomnumber) VALUES (IDENTITY(), '%s', '%s')",
+        String query2 = String.format("INSERT INTO patient (prid, carelevel, roomnumber) " +
+                        "VALUES (IDENTITY(), '%s', '%s')",
                 patient.getCareLevel(), patient.getRoomNumber());
         return query1 + '\n' + query2;
     }
@@ -45,7 +49,9 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT patient.*, person.* FROM patient INNER JOIN person ON patient.prid = person.prid WHERE pid = %d", key);
+        return String.format("SELECT patient.*, person.* FROM patient " +
+                "INNER JOIN person ON patient.prid = person.prid " +
+                "WHERE pid = %d", key);
     }
 
     /**
@@ -69,7 +75,10 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getReadAllStatementString() {
-        return "SELECT patient.*, person.* FROM patient INNER JOIN person ON patient.prid = person.prid";
+        return "SELECT patient.*, person.* " +
+                "FROM patient " +
+                "INNER JOIN person " +
+                "ON patient.prid = person.prid";
     }
 
     /**
@@ -98,11 +107,17 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getUpdateStatementString(Patient patient) {
-        String query1 = String.format("UPDATE person SET firstname = '%s', surname = '%s', dateOfBirth = %s WHERE " +
-                        "PRID = (SELECT pid FROM patient WHERE pid = %s)",
+        String query1 = String.format("UPDATE person " +
+                        "SET firstname = '%s', surname = '%s', dateOfBirth = '%s' " +
+                        "WHERE PRID = (SELECT prId FROM patient " +
+                        "WHERE pid = %s)",
                 patient.getFirstname(), patient.getSurname(), patient.getDateOfBirth().toString(), patient.getPid());
-        String query2 = String.format("UPDATE patient SET carelevel = '%s', roomnumber = '%s' WHERE pid = %d",
+
+        String query2 = String.format("UPDATE patient " +
+                        "SET carelevel = '%s', roomnumber = '%s' " +
+                        "WHERE pid = %d",
                 patient.getCareLevel(), patient.getRoomNumber(), patient.getPid());
+
         return query1 + '\n' + query2;
     }
 
@@ -113,8 +128,7 @@ public class PatientDAO extends DAOimp<Patient> {
      */
     @Override
     protected String getDeleteStatementString(long key) {
-        String query1 = String.format("DELETE FROM person WHERE prid = (SELECT patient.prid FROM patient WHERE patient.prid = %d)", key);
-        String query2 = String.format("DELETE FROM patient WHERE pid=%d", key);
-        return query1 + '\n' + query2;
+        return String.format("DELETE FROM person " +
+                "WHERE prid = (SELECT patient.prid FROM patient WHERE patient.pid = %d)", key);
     }
 }

@@ -30,9 +30,13 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
-        String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
+        String query1 = String.format("SELECT PRID " +
+                        "FROM person " +
+                        "INSERT INTO person (firstname, surname, dateOfBirth) " +
+                        "VALUES('%s', '%s', '%s')",
                 caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth());
-        String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
+        String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) " +
+                        "VALUES (IDENTITY(), '%s', '%s')",
                 caregiver.getPermissionId(), caregiver.getPhoneNumber());
         return query1 + '\n' + query2;
     }

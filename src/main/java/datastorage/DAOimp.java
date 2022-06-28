@@ -44,7 +44,9 @@ public abstract class DAOimp<T> implements DAO<T>{
     @Override
     public void update(T t) throws SQLException {
         Statement st = conn.createStatement();
-        st.executeUpdate(getUpdateStatementString(t));
+        String sql = getUpdateStatementString(t);
+        System.out.println(sql);
+        System.out.println(st.executeUpdate(sql));
     }
 
     @Override
