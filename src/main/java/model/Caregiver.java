@@ -8,6 +8,7 @@ public class Caregiver extends Person {
 
     private long cId;
     private long permissionId;
+    private long credentialsId;
 
     private String phoneNumber;
 
@@ -40,10 +41,11 @@ public class Caregiver extends Person {
      * @param phoneNumber
      */
     public Caregiver(long cId, long prId, String firstname, String surname, LocalDate dateOfBirth,
-                     long permissionId, String phoneNumber) {
+                     long permissionId, String phoneNumber, long credentialsId) {
         super(prId, firstname, surname, dateOfBirth);
         this.cId = cId;
         this.permissionId = permissionId;
+        this.credentialsId = credentialsId;
         this.phoneNumber = phoneNumber;
     }
 
@@ -72,7 +74,7 @@ public class Caregiver extends Person {
     }
 
     /**
-         * adds a caregiver to the treatment-list, if it does not already contain it.
+         * adds a caregiver to the caregiver-list, if it does not already contain it.
          * @param caregiver Caregiver
          * @return true if the caregiver was not already part of the list. otherwise false
          */

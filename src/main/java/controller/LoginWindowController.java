@@ -5,9 +5,9 @@ import datastorage.DAOFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import model.Credentials;
-import model.Patient;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,8 +42,13 @@ public class LoginWindowController {
         try {
             allCredentials = dao.readAll();
             for (Credentials c : allCredentials) {
-                if(usname.equals(c.getUser_name()) && psword.equals(c.getPassword())){
+                if(usname.equals(c.getUsername()) && psword.equals(c.getPassword())){
                     showMainWindow();
+                }else{
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText("Eingabe ungültig.");
+                    errorAlert.setContentText("Username und oder Passwort sind ungültig.");
+                    errorAlert.showAndWait();
                 }
             }
         } catch (SQLException d) {

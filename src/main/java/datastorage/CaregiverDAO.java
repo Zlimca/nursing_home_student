@@ -24,7 +24,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     }
 
     /**
-     * generates a <code>INSERT INTO</code>-Statement for a given patient
+     * generates a <code>INSERT INTO</code>-Statement for a given careiver
      * @param caregiver for which a specific INSERT INTO is to be created
      * @return <code>String</code> with the generated SQL.
      */
@@ -32,7 +32,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     protected String getCreateStatementString(Caregiver caregiver) {
         String query1 = String.format("SELECT PRID FROM person INSERT INTO person (firstname, surname, dateOfBirth) VALUES('%s', '%s', '%s')",
                 caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth());
-        String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
+        String query2 = String.format("INSERT INTO caregiver (prid, permission_id, phonenumber) VALUES (IDENTITY(), '%s', '%s')",
                 caregiver.getPermissionId(), caregiver.getPhoneNumber());
         return query1 + '\n' + query2;
     }
@@ -57,7 +57,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
         Caregiver c;
         c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
                 result.getString(6), result.getDate(7).toLocalDate(),
-                result.getLong(3), result.getString(4));
+                result.getLong(3), result.getString(4), result.getInt(8));
         return c;
     }
 
@@ -83,7 +83,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
             //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
             c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
                     result.getString(6), result.getDate(7).toLocalDate(),
-                    result.getLong(3), result.getString(4));
+                    result.getLong(3), result.getString(4), result.getInt(8));
             list.add(c);
         }
         return list;
