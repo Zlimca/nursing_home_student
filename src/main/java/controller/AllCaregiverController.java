@@ -3,6 +3,7 @@ package controller;
 import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
 import datastorage.TreatmentDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class AllCaregiverController {
     @FXML
     private TableView<Caregiver> tableView;
     @FXML
-    private TableColumn<Caregiver, Integer> colID;
+    private TableColumn<Caregiver, String> colID;
     @FXML
     TextField txtPermissionId;
     @FXML
@@ -63,7 +64,7 @@ public class AllCaregiverController {
     public void initialize() {
         readAllAndShowInTableView();
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Caregiver, Integer>("cId"));
+        this.colID.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCId() + ""));
 
         //CellValueFactory zum Anzeigen der Daten in der TableView
         this.colFirstname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("firstname"));
@@ -73,10 +74,10 @@ public class AllCaregiverController {
         this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("dateOfBirth"));
+        this.colDateOfBirth.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDateOfBirth().toString()));
         this.colDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colPermission.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("permissionId"));
+        this.colPermission.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPermissionId() + ""));
         this.colPermission.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colPhoneNumber.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phoneNumber"));
@@ -88,10 +89,11 @@ public class AllCaregiverController {
 
     /**
      * handles new firstname value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditFirstname(TableColumn.CellEditEvent<Caregiver, String> event){
+    public void handleOnEditFirstname(TableColumn.CellEditEvent<Caregiver, String> event) {
         event.getRowValue().setFirstname(event.getNewValue());
         doUpdate(event);
     }
@@ -160,7 +162,7 @@ public class AllCaregiverController {
     public void handleDeleteRow() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
-            dao.deleteById(selectedItem.getcId());
+            dao.deleteById(selectedItem.getCId());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();

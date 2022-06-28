@@ -171,7 +171,7 @@ public class AllTreatmentController {
         Caregiver caregiver = searchCaregiverInList(selectedItem);
         if (caregiver != null) {
             try {
-                allTreatments = dao.readTreatmentsByPid(caregiver.getcId());
+                allTreatments = dao.readTreatmentsByPid(caregiver.getCId());
                 this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();

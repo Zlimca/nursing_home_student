@@ -50,10 +50,9 @@ public class Caregiver extends Person {
     }
 
     /**
-     *
      * @return caregiver id
      */
-    public long getcId() {
+    public long getCId() {
         return cId;
     }
 
