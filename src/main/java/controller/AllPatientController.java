@@ -3,6 +3,7 @@ package controller;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -66,20 +67,20 @@ public class AllPatientController {
         this.colID.setCellValueFactory(new PropertyValueFactory<>("pid"));
 
         //CellValuefactory zum Anzeigen der Daten in der TableView
-        this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         //CellFactory zum Schreiben innerhalb der Tabelle
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+        this.colDateOfBirth.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDateOfBirth().toString()));
         this.colDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colCareLevel.setCellValueFactory(new PropertyValueFactory<>("careLevel"));
         this.colCareLevel.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colRoom.setCellValueFactory(new PropertyValueFactory<>("roomnumber"));
+        this.colRoom.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         this.colRoom.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten

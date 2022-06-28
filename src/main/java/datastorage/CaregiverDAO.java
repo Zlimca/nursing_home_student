@@ -80,7 +80,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
         ArrayList<Caregiver> list = new ArrayList<>();
         Caregiver c;
         while (result.next()) {
-            //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, int telephone
+            //long cid, long prId,String firstName, String surname, LocalDate dateOfBirth, long permission_id, string phonenumber
             c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
                     result.getString(6), result.getDate(7).toLocalDate(),
                     result.getLong(3), result.getString(4));
