@@ -45,10 +45,10 @@ public class NewTreatmentController {
     /**
      * Initializes the new treatment window data
      *
-     * @param controller @{@link AllTreatmentController}
+     * @param controller {@link AllTreatmentController}
      * @param stage      Stage
-     * @param patient    @{@link Patient}
-     * @param caregiver  @{@link Caregiver}
+     * @param patient    {@link Patient}
+     * @param caregiver  {@link Caregiver}
      */
     public void initialize(AllTreatmentController controller, Stage stage, Patient patient, Caregiver caregiver) {
         this.controller = controller;

@@ -194,6 +194,8 @@ public class AllTreatmentController {
 
     /**
      * Search function for searching a patient
+     *
+     * @param surname Surname
      **/
     private Patient searchPatientInList(String surname) {
         for (Patient patient : this.patientList) {
@@ -206,6 +208,9 @@ public class AllTreatmentController {
 
     /**
      * Search function for searching a caregiver
+     *
+     * @param surname Surname
+     * @return Caregiver
      **/
     private Caregiver searchCaregiverInList(String surname) {
         for (Caregiver caregiver : this.caregiverList) {
