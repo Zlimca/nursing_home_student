@@ -1,6 +1,7 @@
 package controller;
 
 import datastorage.CaregiverDAO;
+import datastorage.DAOCredentials;
 import datastorage.DAOFactory;
 import datastorage.TreatmentDAO;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Caregiver;
+import model.Credentials;
 import utils.DateConverter;
 
 import java.sql.SQLException;
@@ -55,8 +57,14 @@ public class AllCaregiverController {
     @FXML
     TextField txtPhoneNumber;
 
+    @FXML
+    TextField txtUsername;
+    @FXML
+    TextField txtPassword;
+
     private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
-    private CaregiverDAO dao;
+    private CaregiverDAO daoCG;
+    private DAOCredentials daoCR;
 
     /**
      * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
@@ -134,7 +142,7 @@ public class AllCaregiverController {
      */
     private void doUpdate(TableColumn.CellEditEvent<Caregiver, String> t) {
         try {
-            dao.update(t.getRowValue());
+            daoCG.update(t.getRowValue());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -145,10 +153,10 @@ public class AllCaregiverController {
      */
     private void readAllAndShowInTableView() {
         this.tableviewContent.clear();
-        this.dao = DAOFactory.getDAOFactory().createDAOCaregiver();
+        this.daoCG = DAOFactory.getDAOFactory().createDAOCaregiver();
         List<Caregiver> allCaregiver;
         try {
-            allCaregiver = dao.readAll();
+            allCaregiver = daoCG.readAll();
             this.tableviewContent.addAll(allCaregiver);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,7 +170,7 @@ public class AllCaregiverController {
     public void handleDeleteRow() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
-            dao.deleteById(selectedItem.getCId());
+            daoCG.deleteById(selectedItem.getCId());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -174,14 +182,25 @@ public class AllCaregiverController {
      */
     @FXML
     public void handleAdd() {
+        long cid = 111;
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
         LocalDate dateOfBirth = DateConverter.convertStringToLocalDate(this.txtDateOfBirth.getText());
         int permission_id = Integer.parseInt(this.txtPermissionId.getText());
         String phoneNumber = this.txtPhoneNumber.getText();
+        long credentialsId = 7;
+
+        String username = this.txtUsername.getText();
+        String password = this.txtPassword.getText();
+        String salt = "test";
+        boolean firstlogin = true;
         try {
-            Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id, phoneNumber);
-            dao.create(cg);
+            Caregiver cg = new Caregiver(firstname, surname, dateOfBirth, permission_id, phoneNumber,credentialsId);
+            cg.setcId(cid);
+            daoCG.create(cg);
+            Credentials cr = new Credentials(username, password, salt, firstlogin);
+            this.daoCR = DAOFactory.getDAOFactory().createDAOCredentials();
+            daoCR.create(cr);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -23,10 +23,18 @@ public class Caregiver extends Person {
      * @param permissionId
      * @param phoneNumber
      */
-    public Caregiver(String firstname, String surname, LocalDate dateOfBirth, long permissionId, String phoneNumber) {
+    public Caregiver(String firstname, String surname, LocalDate dateOfBirth, long permissionId, String phoneNumber, long credentialsId) {
         super(firstname, surname, dateOfBirth);
         this.permissionId = permissionId;
+        this.credentialsId = credentialsId;
         this.phoneNumber = phoneNumber;
+        //personid
+        //caregiverid
+    }
+
+
+    public long getCredentialsId() {
+        return credentialsId;
     }
 
     /**
@@ -49,6 +57,13 @@ public class Caregiver extends Person {
         this.phoneNumber = phoneNumber;
     }
 
+
+    /*public void setPrid(long prid){
+        this.prid = prid;
+    }*/
+    public void setcId(long cId) {
+        this.cId = cId;
+    }
     /**
      * @return caregiver id
      */

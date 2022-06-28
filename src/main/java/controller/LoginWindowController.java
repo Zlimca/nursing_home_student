@@ -64,7 +64,7 @@ public class LoginWindowController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Main controller = loader.getController();
+        //Main controller = loader.getController();
     }
 
 
