@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -13,7 +12,7 @@ public class MainWindowController {
     private BorderPane mainBorderPane;
 
     @FXML
-    private void handleShowAllPatient(ActionEvent e) {
+    private void handleShowAllPatient() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllPatientView.fxml"));
         try {
             mainBorderPane.setCenter(loader.load());
@@ -23,7 +22,7 @@ public class MainWindowController {
     }
 
     @FXML
-    private void handleShowAllTreatments(ActionEvent e) {
+    private void handleShowAllTreatments() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllTreatmentView.fxml"));
         try {
             mainBorderPane.setCenter(loader.load());
@@ -33,7 +32,7 @@ public class MainWindowController {
     }
 
     @FXML
-    private void handleShowAllCaregiver(ActionEvent e) {
+    private void handleShowAllCaregiver() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaregiverView.fxml"));
         try {
             mainBorderPane.setCenter(loader.load());
