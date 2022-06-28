@@ -38,19 +38,25 @@ public class LoginWindowController {
         initialize(username, password);
         this.dao = DAOFactory.getDAOFactory().createDAOCredentials();
 
+        boolean login = false;
+
         List<Credentials> allCredentials;
         try {
             allCredentials = dao.readAll();
             for (Credentials c : allCredentials) {
-                if(usname.equals(c.getUsername()) && psword.equals(c.getPassword())){
-                    showMainWindow();
-                }else{
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setHeaderText("Eingabe ungültig.");
-                    errorAlert.setContentText("Username und oder Passwort sind ungültig.");
-                    errorAlert.showAndWait();
+                if (usname.equals(c.getUsername()) && psword.equals(c.getPassword())) {
+                    login = true;
                 }
             }
+            if(login){
+                showMainWindow();
+            }else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Eingabe ungültig.");
+                errorAlert.setContentText("Username oder Passwort sind ungültig.");
+                errorAlert.showAndWait();
+            }
+
         } catch (SQLException d) {
             d.printStackTrace();
         }
