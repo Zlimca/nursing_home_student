@@ -20,9 +20,10 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, cid, treatment_date, begin, end, description, remarks) VALUES " +
-                "(%d, %d, '%s', '%s:00', '%s:00', '%s', '%s')", treatment.getPid(), treatment.getCaregiverId(), treatment.getDate(),
-                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks());
+        return String.format("INSERT INTO treatment (pid, cid, treatment_date, begin, end, description, remarks) " +
+                        "VALUES (%d, %d, '%s', '%s:00', '%s:00', '%s', '%s')",
+                treatment.getPid(), treatment.getCaregiverId(), treatment.getDate(), treatment.getBegin(),
+                treatment.getEnd(), treatment.getDescription(), treatment.getRemarks());
     }
 
     @Override
@@ -109,12 +110,20 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     public List<Treatment> readTreatmentsByCid(long cid) throws SQLException {
         ArrayList<Treatment> list;
         Statement st = conn.createStatement();
-        ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByCid(cid));
+        ResultSet result = st.executeQuery(getReadAllTreatmentsOfOneCaregiverByCid(cid));
         list = getListFromResultSet(result);
         return list;
     }
 
-    private String getReadAllTreatmentsOfOnePatientByPid(long key){
+    public List<Treatment> readTreatmentsByPidAndCid(long pId, long cid) throws SQLException {
+        ArrayList<Treatment> list;
+        Statement st = conn.createStatement();
+        ResultSet result = st.executeQuery(getReadAllTreatmentsWithPatientByCaregiver(pId, cid));
+        list = getListFromResultSet(result);
+        return list;
+    }
+
+    private String getReadAllTreatmentsOfOnePatientByPid(long key) {
         return String.format("SELECT treatment.*, " +
                 "caregiver.prID, caregiver.permission_ID, caregiver.phoneNumber, " +
                 "person.firstname, person.surname, person.dateOfBirth " +
@@ -124,7 +133,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
                 "WHERE pid = %d", key);
     }
 
-    private String getReadAllTreatmentsOfOnePatientByCid(long key){
+    private String getReadAllTreatmentsOfOneCaregiverByCid(long key) {
         return String.format("SELECT treatment.*, " +
                 "caregiver.prID, caregiver.permission_ID, caregiver.phoneNumber, " +
                 "person.firstname, person.surname, person.dateOfBirth " +
@@ -132,6 +141,16 @@ public class TreatmentDAO extends DAOimp<Treatment> {
                 "JOIN caregiver ON treatment.cid = caregiver.cid " +
                 "JOIN person ON caregiver.prID = person.prID " +
                 "WHERE treatment.cid = %d", key);
+    }
+
+    private String getReadAllTreatmentsWithPatientByCaregiver(long pId, long cId) {
+        return String.format("SELECT treatment.*, " +
+                "caregiver.prID, caregiver.permission_ID, caregiver.phoneNumber, " +
+                "person.firstname, person.surname, person.dateOfBirth " +
+                "FROM treatment " +
+                "JOIN caregiver ON treatment.cid = caregiver.cid " +
+                "JOIN person ON caregiver.prID = person.prID " +
+                "WHERE treatment.pId = %d AND treatment.cid = %d", pId, cId);
     }
 
     public void deleteByPid(long key) throws SQLException {
