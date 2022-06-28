@@ -2,13 +2,17 @@ package model;
 
 import utils.DateConverter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 
 public class Treatment {
     private long tid;
     private long pid;
-    private long cid;
+    private Caregiver caregiver;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -17,16 +21,17 @@ public class Treatment {
 
     /**
      * @param pid         Person ID
+     * @param caregiver   Caregiver Object
      * @param date        Treatment Date
      * @param begin       Start time of the treatment
      * @param end         End time of the treatment
      * @param description Brief description of the activity
      * @param remarks     Remarks
      **/
-    public Treatment(long pid, long cid, LocalDate date, LocalTime begin,
+    public Treatment(long pid, Caregiver caregiver, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.pid = pid;
-        this.cid = cid;
+        this.caregiver = caregiver;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -37,18 +42,18 @@ public class Treatment {
     /**
      * @param tid         Treatment ID
      * @param pid         Person ID
-     * @param cid         Caregiver ID
+     * @param caregiver   Caregiver Object
      * @param date        Treatment Date
      * @param begin       Start time of the treatment
      * @param end         End time of the treatment
      * @param description Brief description of the activity
      * @param remarks     Remarks
      **/
-    public Treatment(long tid, long pid, long cid, LocalDate date, LocalTime begin,
+    public Treatment(long tid, long pid, Caregiver caregiver, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks) {
         this.tid = tid;
         this.pid = pid;
-        this.cid = cid;
+        this.caregiver = caregiver;
         this.date = date;
         this.begin = begin;
         this.end = end;
@@ -64,8 +69,12 @@ public class Treatment {
         return this.pid;
     }
 
-    public long getCid() {
-        return this.cid;
+    public Caregiver getCaregiver() {
+        return this.caregiver;
+    }
+
+    public long getCaregiverId(){
+        return this.caregiver.getCId();
     }
 
     public LocalDate getDate() {
@@ -73,11 +82,11 @@ public class Treatment {
     }
 
     public LocalTime getBegin() {
-        return begin;
+        return this.begin;
     }
 
     public LocalTime getEnd() {
-        return end;
+        return this.end;
     }
 
     public void setDate(String s_date) {

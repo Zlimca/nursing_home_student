@@ -4,6 +4,7 @@ import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +39,14 @@ public class AllTreatmentController {
     @FXML
     private TableColumn<Treatment, String> colDescription;
     @FXML
+    private TableColumn<Treatment, String> colCId;
+    @FXML
+    private TableColumn<Treatment, String> colFirstname;
+    @FXML
+    private TableColumn<Treatment, String> colSurname;
+    @FXML
+    private TableColumn<Treatment, String> colPhoneNumber;
+    @FXML
     private ComboBox<String> patientComboBox;
     @FXML
     private ComboBox<String> caregiverComboBox;
@@ -69,6 +78,10 @@ public class AllTreatmentController {
         this.colBegin.setCellValueFactory(new PropertyValueFactory<>("begin"));
         this.colEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        this.colCId.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCaregiverId() + ""));
+        this.colFirstname.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCaregiver().getFirstname()));
+        this.colSurname.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCaregiver().getSurname()));
+        this.colPhoneNumber.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCaregiver().getPhoneNumber()));
         this.tableView.setItems(this.tableviewContent);
         createPatientComboBoxData();
         createCaregiverComboBoxData();
@@ -171,7 +184,7 @@ public class AllTreatmentController {
         Caregiver caregiver = searchCaregiverInList(selectedItem);
         if (caregiver != null) {
             try {
-                allTreatments = dao.readTreatmentsByPid(caregiver.getCId());
+                allTreatments = dao.readTreatmentsByCid(caregiver.getCId());
                 this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();

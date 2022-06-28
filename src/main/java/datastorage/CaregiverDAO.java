@@ -45,7 +45,10 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected String getReadByIDStatementString(long key) {
-        return String.format("SELECT caregiver.*, person.FIRSTNAME, person.SURNAME, person.DATEOFBIRTH FROM patient INNER JOIN person ON caregiver.prid WHERE cid = %d", key);
+        return String.format("SELECT caregiver.*, person.FIRSTNAME, person.SURNAME, person.DATEOFBIRTH " +
+                "FROM caregiver " +
+                "INNER JOIN person ON caregiver.prid = person.prid " +
+                "WHERE cid = %d", key);
     }
 
     /**

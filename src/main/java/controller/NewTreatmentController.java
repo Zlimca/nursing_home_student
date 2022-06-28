@@ -64,11 +64,11 @@ public class NewTreatmentController {
     @FXML
     public void handleAdd() {
         LocalDate date = this.datepicker.getValue();
-        LocalTime begin = DateConverter.convertStringToLocalTime(txtBegin.getText());
-        LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
+        LocalTime begin = DateConverter.autoCompleteTime(txtBegin.getText());
+        LocalTime end = DateConverter.autoCompleteTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
-        Treatment treatment = new Treatment(patient.getPid(), caregiver.getCId(), date, begin, end, description, remarks);
+        Treatment treatment = new Treatment(patient.getPid(), caregiver, date, begin, end, description, remarks);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();

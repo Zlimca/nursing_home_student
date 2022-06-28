@@ -24,6 +24,7 @@ public abstract class DAOimp<T> implements DAO<T>{
     public T read(long key) throws SQLException {
         T object = null;
         Statement st = conn.createStatement();
+        System.out.println(getReadByIDStatementString(key));
         ResultSet result = st.executeQuery(getReadByIDStatementString(key));
         if (result.next()) {
             object = getInstanceFromResultSet(result);

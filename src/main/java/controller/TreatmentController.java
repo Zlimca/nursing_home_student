@@ -51,7 +51,7 @@ public class TreatmentController {
         CaregiverDAO caregiverDAO = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
             this.patient = pDao.read(treatment.getPid());
-            this.caregiver = caregiverDAO.read(treatment.getCid());
+            this.caregiver = caregiverDAO.read(treatment.getCaregiverId());
             this.treatment = treatment;
             showData();
         } catch (SQLException e) {
