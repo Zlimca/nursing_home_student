@@ -44,9 +44,16 @@ public class TreatmentController {
     private Caregiver caregiver;
     private Treatment treatment;
 
+    /**
+     * Initialization of the {@link TreatmentController}
+     *
+     * @param controller {@link AllTreatmentController}
+     * @param stage      Stage
+     * @param treatment  {@link Treatment}
+     */
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
-        this.controller= controller;
+        this.controller = controller;
         PatientDAO pDao = DAOFactory.getDAOFactory().createPatientDAO();
         CaregiverDAO caregiverDAO = DAOFactory.getDAOFactory().createDAOCaregiver();
         try {
@@ -59,6 +66,9 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * Puts all data into labels
+     */
     private void showData() {
         this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstname());
         this.lblCarelevel.setText(patient.getCareLevel());

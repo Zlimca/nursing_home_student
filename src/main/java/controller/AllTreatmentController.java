@@ -57,8 +57,8 @@ public class AllTreatmentController {
 
     private final ObservableList<Treatment> tableviewContent = FXCollections.observableArrayList();
     private TreatmentDAO dao;
-    private ObservableList<String> patientComboBoxData = FXCollections.observableArrayList();
-    private ObservableList<String> caregiverComboBoxData = FXCollections.observableArrayList();
+    private final ObservableList<String> patientComboBoxData = FXCollections.observableArrayList();
+    private final ObservableList<String> caregiverComboBoxData = FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
     private ArrayList<Caregiver> caregiverList;
 

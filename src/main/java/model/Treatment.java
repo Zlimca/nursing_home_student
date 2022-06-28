@@ -2,17 +2,13 @@ package model;
 
 import utils.DateConverter;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.FormatStyle;
 
 public class Treatment {
     private long tid;
-    private long pid;
-    private Caregiver caregiver;
+    private final long pid;
+    private final Caregiver caregiver;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -118,8 +114,10 @@ public class Treatment {
     }
 
     public String toString() {
-        return "\nBehandlung" + "\nTID: " + this.tid +
+        return "\nBehandlung" +
+                "\nTID: " + this.tid +
                 "\nPID: " + this.pid +
+                "\nCID: " + this.caregiver.getCId() +
                 "\nDate: " + this.date +
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +

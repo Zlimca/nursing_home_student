@@ -55,7 +55,7 @@ public class AllPatientController {
     @FXML
     TextField txtRoom;
 
-    private ObservableList<Patient> tableviewContent = FXCollections.observableArrayList();
+    private final ObservableList<Patient> tableviewContent = FXCollections.observableArrayList();
     private PatientDAO dao;
 
     /**
@@ -66,7 +66,7 @@ public class AllPatientController {
 
         this.colID.setCellValueFactory(new PropertyValueFactory<>("pid"));
 
-        //CellValuefactory zum Anzeigen der Daten in der TableView
+        //CellValueFactory zum Anzeigen der Daten in der TableView
         this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         //CellFactory zum Schreiben innerhalb der Tabelle
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -113,12 +113,13 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event){
-        event.getRowValue().setDateOfBirth(event.getNewValue());
+        event.getRowValue().setDateOfBirth(LocalDate.parse(event.getNewValue()));
         doUpdate(event);
     }
 
     /**
-     * handles new carelevel value
+     * handles new care level value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
@@ -128,11 +129,12 @@ public class AllPatientController {
     }
 
     /**
-     * handles new roomnumber value
+     * handles new roomNumber value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditRoomnumber(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditRoomNumber(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setRoomNumber(event.getNewValue());
         doUpdate(event);
     }
@@ -181,7 +183,7 @@ public class AllPatientController {
     }
 
     /**
-     * handles a add-click-event. Creates a patient and calls the create method in the {@link PatientDAO}
+     * handles an add-click-event. Creates a patient and calls the create method in the {@link PatientDAO}
      */
     @FXML
     public void handleAdd() {
@@ -189,22 +191,22 @@ public class AllPatientController {
         String firstname = this.txtFirstname.getText();
         String birthday = this.txtBirthday.getText();
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
-        String carelevel = this.txtCareLevel.getText();
+        String careLevel = this.txtCareLevel.getText();
         String room = this.txtRoom.getText();
         try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
+            Patient p = new Patient(firstname, surname, date, careLevel, room);
             dao.create(p);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         readAllAndShowInTableView();
-        clearTextfields();
+        clearTextFields();
     }
 
     /**
-     * removes content from all textfields
+     * removes content from all text fields
      */
-    private void clearTextfields() {
+    private void clearTextFields() {
         this.txtFirstname.clear();
         this.txtSurname.clear();
         this.txtBirthday.clear();

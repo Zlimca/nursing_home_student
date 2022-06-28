@@ -42,6 +42,14 @@ public class NewTreatmentController {
     private Caregiver caregiver;
     private Stage stage;
 
+    /**
+     * Initializes the new treatment window data
+     *
+     * @param controller @{@link AllTreatmentController}
+     * @param stage      Stage
+     * @param patient    @{@link Patient}
+     * @param caregiver  @{@link Caregiver}
+     */
     public void initialize(AllTreatmentController controller, Stage stage, Patient patient, Caregiver caregiver) {
         this.controller = controller;
         this.patient = patient;
@@ -51,11 +59,17 @@ public class NewTreatmentController {
         showCaregiverData();
     }
 
+    /**
+     * Puts patient data into labels
+     */
     private void showPatientData() {
         this.lblFirstname.setText(patient.getFirstname());
         this.lblSurname.setText(patient.getSurname());
     }
 
+    /**
+     * Puts caregiver data into labels
+     */
     private void showCaregiverData() {
         this.lblCaregiverFirstname.setText(caregiver.getFirstname());
         this.lblCaregiverSurname.setText(caregiver.getSurname());
@@ -74,6 +88,11 @@ public class NewTreatmentController {
         stage.close();
     }
 
+    /**
+     * Creates entry in table from {@link Treatment}
+     *
+     * @param treatment Treatment object
+     */
     private void createTreatment(Treatment treatment) {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {

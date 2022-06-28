@@ -1,28 +1,23 @@
 package model;
 
-import utils.DateConverter;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Patients live in a NURSING home and are treated by nurses.
  */
 public class Patient extends Person {
     private long pid;
-    private LocalDate dateOfBirth;
     private String careLevel;
     private String roomNumber;
-    private List<Treatment> allTreatments = new ArrayList<Treatment>();
 
     /**
      * constructs a patient from the given params.
-     * @param firstName
-     * @param surname
-     * @param dateOfBirth
-     * @param careLevel
-     * @param roomNumber
+     *
+     * @param firstName   Firstname
+     * @param surname     Surname
+     * @param dateOfBirth Birthday
+     * @param careLevel   Care level
+     * @param roomNumber  Room Number
      */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
         super(firstName, surname, dateOfBirth);
@@ -32,18 +27,18 @@ public class Patient extends Person {
 
     /**
      * constructs a patient from the given params.
-     * @param pid
-     * @param prId Person ID
-     * @param firstName
-     * @param surname
-     * @param dateOfBirth
-     * @param careLevel
-     * @param roomNumber
+     *
+     * @param pid         Patient ID
+     * @param prId        Person ID
+     * @param firstname   Firstname
+     * @param surname     Surname
+     * @param dateOfBirth Birthday
+     * @param careLevel   Care Level
+     * @param roomNumber  Room Number
      */
-    public Patient(long pid, long prId, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
-        super(prId, firstName, surname, dateOfBirth);
+    public Patient(long pid, long prId, String firstname, String surname, LocalDate dateOfBirth, String careLevel, String roomNumber) {
+        super(prId, firstname, surname, dateOfBirth);
         this.pid = pid;
-        this.dateOfBirth = dateOfBirth;
         this.careLevel = careLevel;
         this.roomNumber = roomNumber;
     }
@@ -54,22 +49,6 @@ public class Patient extends Person {
      */
     public long getPid() {
         return pid;
-    }
-
-    /**
-     *
-     * @return date of birth as a string
-     */
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    /**
-     * convert given param to a localDate and store as new <code>birthOfDate</code>
-     * @param dateOfBirth as string in the following format: YYYY-MM-DD
-     */
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = DateConverter.convertStringToLocalDate(dateOfBirth);
     }
 
     /**
@@ -97,24 +76,10 @@ public class Patient extends Person {
     }
 
     /**
-     *
-     * @param roomNumber
+     * @param roomNumber Room Number
      */
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
-    }
-
-    /**
-     * adds a treatment to the treatment-list, if it does not already contain it.
-     * @param m Treatment
-     * @return true if the treatment was not already part of the list. otherwise false
-     */
-    public boolean add(Treatment m) {
-        if (!this.allTreatments.contains(m)) {
-            this.allTreatments.add(m);
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -122,10 +87,11 @@ public class Patient extends Person {
      * @return string-representation of the patient
      */
     public String toString() {
-        return "Patient" + "\nID: " + this.pid +
+        return "Patient" +
+                "\nID: " + this.pid +
                 "\nFirstname: " + this.getFirstname() +
                 "\nSurname: " + this.getSurname() +
-                "\nBirthday: " + this.dateOfBirth +
+                "\nBirthday: " + this.getDateOfBirth() +
                 "\nCarelevel: " + this.careLevel +
                 "\nRoomnumber: " + this.roomNumber +
                 "\n";
