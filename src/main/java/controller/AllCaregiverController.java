@@ -62,9 +62,8 @@ public class AllCaregiverController {
     @FXML
     TextField txtPassword;
 
-    private ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
+    private final ObservableList<Caregiver> tableviewContent = FXCollections.observableArrayList();
     private CaregiverDAO daoCG;
-    private DAOCredentials daoCR;
 
     /**
      * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
@@ -75,11 +74,11 @@ public class AllCaregiverController {
         this.colID.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCId() + ""));
 
         //CellValueFactory zum Anzeigen der Daten in der TableView
-        this.colFirstname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("firstname"));
+        this.colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         //CellFactory zum Schreiben innerhalb der Tabelle
         this.colFirstname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("surname"));
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
         this.colDateOfBirth.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDateOfBirth().toString()));
@@ -88,7 +87,7 @@ public class AllCaregiverController {
         this.colPermission.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPermissionId() + ""));
         this.colPermission.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colPhoneNumber.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phoneNumber"));
+        this.colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         this.colPhoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
 
         //Anzeigen der Daten
@@ -117,18 +116,33 @@ public class AllCaregiverController {
         doUpdate(event);
     }
 
+    /**
+     * handles new permission value
+     *
+     * @param event event including the value that a user entered into the cell
+     */
     @FXML
     public void handleOnEditPermission(TableColumn.CellEditEvent<Caregiver, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         doUpdate(event);
     }
 
+    /**
+     * handles new dateOfBirth value
+     *
+     * @param event event including the value that a user entered into the cell
+     */
     @FXML
     public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Caregiver, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         doUpdate(event);
     }
 
+    /**
+     * handles new phonenu,ber value
+     *
+     * @param event event including the value that a user entered into the cell
+     */
     @FXML
     public void handleOnEditPhoneNumber(TableColumn.CellEditEvent<Caregiver, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
@@ -178,17 +192,18 @@ public class AllCaregiverController {
     }
 
     /**
-     * handles a add-click-event. Creates a patient and calls the create method in the {@link CaregiverDAO}
+     * handles a add-click-event. Creates a caregiver and calls the create method in the {@link CaregiverDAO}
+     * also creates an entry in the credential-table
      */
     @FXML
     public void handleAdd() {
-        long cid = 111;
+        long cid = 1111;
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
         LocalDate dateOfBirth = DateConverter.convertStringToLocalDate(this.txtDateOfBirth.getText());
         int permission_id = Integer.parseInt(this.txtPermissionId.getText());
         String phoneNumber = this.txtPhoneNumber.getText();
-        long credentialsId = 7;
+        long credentialsId = 2;
 
         String username = this.txtUsername.getText();
         String password = this.txtPassword.getText();
@@ -199,7 +214,7 @@ public class AllCaregiverController {
             cg.setcId(cid);
             daoCG.create(cg);
             Credentials cr = new Credentials(username, password, salt, firstlogin);
-            this.daoCR = DAOFactory.getDAOFactory().createDAOCredentials();
+            DAOCredentials daoCR = DAOFactory.getDAOFactory().createDAOCredentials();
             daoCR.create(cr);
         } catch (SQLException e) {
             e.printStackTrace();

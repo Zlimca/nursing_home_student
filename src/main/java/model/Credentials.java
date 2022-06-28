@@ -7,12 +7,12 @@ public class Credentials {
 //Login
     private long credentialsid;
     private long prid;
-    private String username;
-    private String password;
-    private String salt;
-    private boolean firstlogin;
+    private final String username;
+    private final String password;
+    private final String salt;
+    private final boolean firstlogin;
 
-    private List<Credentials> allCredentials = new ArrayList<Credentials>();
+    private final List<Credentials> allCredentials = new ArrayList<>();
 
     public Credentials(String username, String password, String salt, boolean firstlogin){
         this.username = username;
@@ -21,16 +21,15 @@ public class Credentials {
         this.firstlogin = firstlogin;
     }
 
-
     /**
      * constructs a patient from the given params.
      *
-     * @param credentialsid
-     * @param prid
-     * @param username
-     * @param password
-     * @param salt
-     * @param firstlogin
+     * @param credentialsid credentialsId
+     * @param prid PersonId
+     * @param username Username
+     * @param password Password
+     * @param salt Salt
+     * @param firstlogin firstlogin
      */
     public Credentials(long credentialsid, long prid, String username, String password, String salt, boolean firstlogin){
         this.credentialsid = credentialsid;
