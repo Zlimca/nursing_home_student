@@ -36,7 +36,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         Caregiver caregiver = new Caregiver(
                 result.getLong(1), result.getLong(2), result.getString(3),
                 result.getString(4), result.getDate(5).toLocalDate(), result.getLong(6),
-                result.getString(7));
+                result.getString(7), result.getInt(8));
         // long cId, long prId, String firstname, String surname, LocalDate dateOfBirth, long permissionId, String phoneNumber
         Treatment t = new Treatment(result.getLong(1), result.getLong(2),
                 caregiver, result.getDate(4).toLocalDate(),
@@ -58,7 +58,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     @Override
     protected ArrayList<Treatment> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Treatment> list = new ArrayList<>();
-        Treatment treatment;
+        Treatment t;
         Caregiver caregiver;
         while (result.next()) {
             long cId = result.getLong(3);
@@ -76,9 +76,10 @@ public class TreatmentDAO extends DAOimp<Treatment> {
             LocalTime end = checkTimeForNull(result.getTime(6));
             String description = result.getString(7);
             String remarks = result.getString(8);
-            caregiver = new Caregiver(cId, prId, firstname, surname, dateOfBirth, permissionId, phoneNumber);
-            treatment = new Treatment(tId, pId, caregiver, date, begin, end, description, remarks);
-            list.add(treatment);
+            long credentialsId = result.getInt(9);
+            caregiver = new Caregiver(cId, prId, firstname,surname, dateOfBirth, permissionId,phoneNumber, credentialsId);
+            t = new Treatment(tId, pId, caregiver, date, begin, end, description, remarks);
+            list.add(t);
         }
         return list;
     }

@@ -32,15 +32,20 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected String getCreateStatementString(Caregiver caregiver) {
-        String query1 = String.format("SELECT PRID " +
-                        "FROM person " +
-                        "INSERT INTO person (firstname, surname, dateOfBirth) " +
-                        "VALUES('%s', '%s', '%s')",
+        String query1 = String.format("INSERT INTO person(firstname, surname, dateOfBirth) " +
+                        "VALUES('%s', '%s', '%s');",
                 caregiver.getFirstname(), caregiver.getSurname(), caregiver.getDateOfBirth());
-        String query2 = String.format("INSERT INTO patient (prid, permission_id, phonenumber) " +
-                        "VALUES (IDENTITY(), '%s', '%s')",
-                caregiver.getPermissionId(), caregiver.getPhoneNumber());
-        return query1 + '\n' + query2;
+        String query2 = "INSERT INTO caregiver(prid, credentials_id, permission_id, phonenumber) " +
+                "SELECT PRID, 1, 1, null " +
+                "FROM person;";
+        String query3 = String.format("UPDATE caregiver " +
+                "SET " +
+                "credentials_id = %d, permission_id = %d, phonenumber = '%s' " +
+                "WHERE cid = (SELECT * " +
+                "FROM (SELECT MAX(cid) " +
+                "FROM caregiver))",
+                caregiver.getCredentialsId(), caregiver.getPermissionId(), caregiver.getPhoneNumber());
+        return query1 + '\n' + query2 + '\n' + query3;
     }
 
     /**
@@ -65,10 +70,16 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
      */
     @Override
     protected Caregiver getInstanceFromResultSet(ResultSet result) throws SQLException {
+        long cid = result.getInt(1);
+        long prid = result.getInt(2);
+        String firstname = result.getString(6);
+        String surname = result.getString(7);
+        LocalDate dateOfBirth = result.getDate(8).toLocalDate();
+        long permissionId = result.getInt(3);
+        String phonenumber = result.getString(5);
+        long credentialsId = result.getInt(4);
         Caregiver c;
-        c = new Caregiver(result.getInt(1), result.getInt(2), result.getString(5),
-                result.getString(6), result.getDate(7).toLocalDate(),
-                result.getLong(3), result.getString(4));
+        c = new Caregiver(cid, prid, firstname,surname,dateOfBirth,permissionId,phonenumber,credentialsId);
         return c;
     }
 
@@ -93,17 +104,18 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
     @Override
     protected ArrayList<Caregiver> getListFromResultSet(ResultSet result) throws SQLException {
         ArrayList<Caregiver> list = new ArrayList<>();
-        Caregiver caregiver;
+        Caregiver c;
         while (result.next()) {
-            long cId = result.getInt(1);
-            long prId = result.getInt(2);
-            String firstname = result.getString(5);
-            String surname = result.getString(6);
-            LocalDate dateOfBirth = result.getDate(7).toLocalDate();
-            long permissionId = result.getLong(3);
-            String phoneNumber = result.getString(4);
-            caregiver = new Caregiver(cId, prId, firstname, surname, dateOfBirth, permissionId, phoneNumber);
-            list.add(caregiver);
+            long cid = result.getInt(1);
+            long prid = result.getInt(2);
+            String firstname = result.getString(6);
+            String surname = result.getString(7);
+            LocalDate dateOfBirth = result.getDate(8).toLocalDate();
+            long permissionId = result.getInt(3);
+            String phonenumber = result.getString(5);
+            long credentialsId = result.getInt(4);
+             c = new Caregiver(cid, prid, firstname,surname,dateOfBirth,permissionId,phonenumber,credentialsId);
+            list.add(c);
         }
         return list;
     }
@@ -139,6 +151,7 @@ public class CaregiverDAO extends DAOimp<Caregiver> {
                         "WHERE caregiver.prid = %d)",
                 key);
         String query2 = String.format("DELETE FROM caregiver WHERE cid=%d", key);
-        return query1 + '\n' + query2;
+        String query3 = String.format("DELETE FROM credentials WHERE credentials_id = (SELECT caregiver.credentials_id FROM caregiver WHERE caregiver.credentials_id = %d)", key);
+        return query1 + '\n' + query2 + '\n' + query3;
     }
 }
